@@ -1,1 +1,1 @@
-# StaticCalculation
+# Static Calculation

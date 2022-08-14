@@ -1,0 +1,31 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "freeglut",
+    srcs = ["freeglut-3.0.0/lib/x64/freeglut.lib"],
+    hdrs = glob(["freeglut-3.0.0/include/GL/*.h"]),
+    includes = ["freeglut-3.0.0/include"],
+    strip_include_prefix = "freeglut-3.0.0/include",
+)
+
+cc_library(
+    name = "glfw",
+    srcs = select({
+        "@bazel_tools//platforms:windows": glob([
+            "glfw-3.3.5/lib/*.lib",
+            "glfw-3.3.5/lib/*.dll",
+        ]),
+        "@bazel_tools//platforms:linux": [
+            "glfw-3.3.5/lib/libglfw3.a",
+        ],
+    }),
+    hdrs = glob(["glfw-3.3.5/include/GLFW/*.h"]),
+    includes = ["glfw-3.3.5/include/GLFW"],
+    linkopts = select({
+        "@bazel_tools//platforms:windows": ["-DEFAULTLIB:opengl32.lib", "-DEFAULTLIB:gdi32.lib", "-DEFAULTLIB:shell32.lib"],
+        "@bazel_tools//platforms:linux": ["-lX11"],
+    }),
+    strip_include_prefix = "glfw-3.3.5/include",
+)

@@ -1,0 +1,16 @@
+workspace(name = "imguilib")
+
+local_repository(
+    name = "directx11lib",
+    path = "../DirectX11/",
+)
+
+local_repository(
+    name = "gllib",
+    path = "../GL/",
+)
+
+local_repository(
+    name = "sfmllib",
+    path = "../SFML/",
+)
