@@ -1,11 +1,13 @@
-#include "Application/GUI/menu_bar.h"
-#include "Core/event_system.h"
-
+#include <GLFW/glfw3.h>  // Will drag system OpenGL headers
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <stdio.h>
-#include <GLFW/glfw3.h> // Will drag system OpenGL headers
+
+#include "Application/Core/configuration.h"
+#include "Application/GUI/main_window.h"
+#include "Application/GUI/menu_bar.h"
+#include "Core/event_system.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -16,8 +18,7 @@ int main(int, char**)
 {
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit())
-        return 1;
+    if (!glfwInit()) return 1;
 
     // GL 3.0 + GLSL 130
     const char* glsl_version = "#version 130";
@@ -26,7 +27,7 @@ int main(int, char**)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Statika - Torzo", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT, "Statika - Torzo", NULL, NULL);
 
     if (window == NULL)
     {
@@ -35,16 +36,18 @@ int main(int, char**)
     }
 
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Enable vsync
+    glfwSwapInterval(1);  // Enable vsync
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiContext* context = ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF("Application/Assets/Fonts/arial.ttf", Configuration::FONT_SIZE);
+    io.FontDefault = io.Fonts->Fonts[0];
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-//    ImGui::StyleColorsLight();
+    //    ImGui::StyleColorsLight();
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -57,6 +60,7 @@ int main(int, char**)
 
     // Custom GUI components
     MenuBar menu_bar{event_system};
+    MainWindow main_window{event_system};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !isDone)
@@ -77,6 +81,7 @@ int main(int, char**)
         // GUI components
         {
             menu_bar.Show();
+            main_window.Show();
         }
 
         // Rendering
