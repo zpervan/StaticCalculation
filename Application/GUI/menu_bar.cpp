@@ -3,6 +3,8 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
+MenuBar::MenuBar(EventSystem& event_system) : event_system_(event_system) {}
+
 void MenuBar::Show()
 {
     if (ImGui::BeginMainMenuBar())
@@ -11,12 +13,12 @@ void MenuBar::Show()
         {
             if (ImGui::MenuItem("Spremi", "Ctrl+S"))
             {
-                spdlog::info("Spremam dokument...");
+                spdlog::info("Saving document...");
             }
 
-            if(ImGui::MenuItem("Otvori", nullptr))
+            if (ImGui::MenuItem("Otvori", nullptr))
             {
-                spdlog::info("Otvaram dokument...");
+                spdlog::info("Loading document");
             }
 
             ImGui::EndMenu();
@@ -28,7 +30,8 @@ void MenuBar::Show()
 
             if (ImGui::MenuItem("Ugasi", nullptr))
             {
-                spdlog::info("Izlazim iz aplikacije");
+                spdlog::info("Exiting application...");
+                event_system_.Set(Events::Exit);
             }
 
             ImGui::EndMenu();

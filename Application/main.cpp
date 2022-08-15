@@ -1,4 +1,5 @@
 #include "Application/GUI/menu_bar.h"
+#include "Core/event_system.h"
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -50,18 +51,23 @@ int main(int, char**)
     ImGui_ImplOpenGL3_Init(glsl_version);
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    // Core functionalities
+    EventSystem event_system{};
+    bool isDone{false};
+
     // Custom GUI components
-    MenuBar menu_bar;
+    MenuBar menu_bar{event_system};
 
     // Main loop
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window) && !isDone)
     {
-        // Poll and handle events (inputs, window resize, etc.)
-        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
-        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
-        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
         glfwPollEvents();
+
+        /// @TODO: Create a window class and hide the boilerplate code
+        if (event_system.Poll() == Events::Exit)
+        {
+            isDone = true;
+        }
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
