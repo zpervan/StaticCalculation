@@ -24,8 +24,17 @@ cc_library(
     hdrs = glob(["glfw-3.3.5/include/GLFW/*.h"]),
     includes = ["glfw-3.3.5/include/GLFW"],
     linkopts = select({
-        "@bazel_tools//platforms:windows": ["-DEFAULTLIB:opengl32.lib", "-DEFAULTLIB:gdi32.lib", "-DEFAULTLIB:shell32.lib"],
-        "@bazel_tools//platforms:linux": ["-lX11"],
+        "@bazel_tools//platforms:windows": [
+            "-DEFAULTLIB:opengl32.lib",
+            "-DEFAULTLIB:gdi32.lib",
+            "-DEFAULTLIB:shell32.lib",
+        ],
+        "@bazel_tools//platforms:linux": [
+            "-lX11",
+            "-lGL",
+            "-lpthread",
+            "-ldl",
+        ],
     }),
     strip_include_prefix = "glfw-3.3.5/include",
 )
