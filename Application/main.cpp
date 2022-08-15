@@ -40,7 +40,7 @@ int main(int, char**)
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
-    ImGuiContext* context = ImGui::CreateContext();
+    ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontFromFileTTF("Application/Assets/Fonts/arial.ttf", Configuration::FONT_SIZE);
     io.FontDefault = io.Fonts->Fonts[0];

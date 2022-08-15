@@ -1,16 +1,14 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
-    name = "gui",
+    name = "backend",
     srcs = glob([
-        "Components/*",
+        "*.h",
         "*.cpp",
     ]),
     hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//Application/Backend:backend",
-        "//Application/Core:core",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],

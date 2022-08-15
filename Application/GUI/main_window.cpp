@@ -2,15 +2,16 @@
 
 #include <imgui.h>
 
+#include "Application/Backend/fert.h"
 #include "Application/Core/configuration.h"
 #include "Application/Core/values.h"
-#include "Application/GUI/Components/input_text_field.h"
+#include "Application/GUI/Components/input_fields.h"
 #include "Application/GUI/constants.h"
 
 namespace
 {
 ImGuiWindowFlags window_flags{ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration};
-}
+}  // namespace
 
 MainWindow::MainWindow(EventSystem& event_system) : event_system_(event_system) {}
 
@@ -33,14 +34,22 @@ void MainWindow::Show()
     ImGui::Separator();
     ImGui::NewLine();
     ImGui::Text("A1. Stalni teret");
-    GUI::InputTextField("Gotovi pod: ", Values::GOTOVI_POD, "npr. 0.5", GUI::Constants::KNM2);
-    GUI::InputTextField("Estrih: ", Values::ESTRIH, "npr. 0.5", GUI::Constants::KNM2);
-    GUI::InputTextField("Termoizolacija: ", Values::TERMOIZOLACIJA, "npr. 0.5", GUI::Constants::KNM2);
-    GUI::InputTextField("Predgradni zidovi: ", Values::PREGRADNI_ZIDOVI, "npr. 0.5", GUI::Constants::KNM2);
-    GUI::InputTextField("Vlastita tezina stropne konstrukcije: ", Values::TEZINA_STROPNE_KONS, "npr. 0.5", GUI::Constants::KNM2);
-    GUI::InputTextField("Podgled: ", Values::PODGLED, "npr. 0.5", GUI::Constants::KNM2);
+    GUI::InputFloatField("Gotovi pod: ", Values::GOTOVI_POD, GUI::Constants::KNM2);
+    GUI::InputFloatField("Estrih: ", Values::ESTRIH, GUI::Constants::KNM2);
+    GUI::InputFloatField("Termoizolacija: ", Values::TERMOIZOLACIJA, GUI::Constants::KNM2);
+    GUI::InputFloatField("Predgradni zidovi: ", Values::PREGRADNI_ZIDOVI, GUI::Constants::KNM2);
+    GUI::InputFloatField("Vlastita tezina stropne konstrukcije: ", Values::TEZINA_STROPNE_KONS, GUI::Constants::KNM2);
+    GUI::InputFloatField("Podgled: ", Values::PODGLED, GUI::Constants::KNM2);
     ImGui::NewLine();
-    ImGui::Text("Ukupno stalno opterecenje: ");
+
+    Values::UKUPNO_OPTERECENJE = Backend::calculateLoad(Values::GOTOVI_POD,
+                                                        Values::ESTRIH,
+                                                        Values::TERMOIZOLACIJA,
+                                                        Values::PREGRADNI_ZIDOVI,
+                                                        Values::TEZINA_STROPNE_KONS,
+                                                        Values::PODGLED);
+
+    ImGui::Text("Ukupno stalno opterecenje: %f %s", Values::UKUPNO_OPTERECENJE, GUI::Constants::KNM2);
 
     ImGui::End();
 }
