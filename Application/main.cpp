@@ -3,8 +3,10 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <stdio.h>
+#include <spdlog/spdlog.h>
 
 #include "Application/Core/configuration.h"
+#include "Application/Core/paths.h"
 #include "Application/GUI/main_window.h"
 #include "Application/GUI/menu_bar.h"
 #include "Core/event_system.h"
@@ -42,7 +44,9 @@ int main(int, char**)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
-    io.Fonts->AddFontFromFileTTF("Application/Assets/Fonts/arial.ttf", Configuration::FONT_SIZE);
+
+    /// @TODO: Add assets manager
+    io.Fonts->AddFontFromFileTTF(Paths::AssetsPath().c_str(), Configuration::FONT_SIZE);
     io.FontDefault = io.Fonts->Fonts[0];
 
     // Setup Dear ImGui style
