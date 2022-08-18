@@ -11,12 +11,12 @@ cc_binary(
 cc_library(
     name = "imgui",
     srcs = glob([
-                "backends/imgui_impl_opengl3*",
-                "backends/imgui_impl_glut*",
-                "backends/imgui_impl_glfw*",
-                "*.cpp",
-                "*.h",
-            ]),
+        "backends/imgui_impl_opengl3*",
+        "backends/imgui_impl_glut*",
+        "backends/imgui_impl_glfw*",
+        "*.cpp",
+        "*.h",
+    ]),
     hdrs = [
         "backends/imgui_impl_opengl3.h",
         "backends/imgui_impl_opengl3_loader.h",
@@ -28,7 +28,7 @@ cc_library(
         "backends",
     ],
     deps = [
-                "@gllib//:freeglut",
-                "@gllib//:glfw",
-            ]
+        "@gllib//:freeglut",
+        "@gllib//:glfw",
+    ],
 )
