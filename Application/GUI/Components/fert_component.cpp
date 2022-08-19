@@ -94,7 +94,14 @@ void Fert::Show()
     ImGui::SameLine(0.0f, 10.0f);
     ImGui::Button("Obrisi");
 
-    ImGui::Text("Ukupno stalno opterecenje: %f %s", Values::UKUPNO_OPTERECENJE, GUI::Constants::KNM2);
+    Values::UKUPNO_OPTERECENJE = 0;
+
+    for(const auto & [key, value] : Backend::fert_coefficients)
+    {
+        Values::UKUPNO_OPTERECENJE += value;
+    }
+
+    ImGui::Text("Ukupno stalno opterecenje: %.2f %s", Values::UKUPNO_OPTERECENJE, GUI::Constants::KNM2);
 
     ImGui::NewLine();
     ImGui::Text("A2. Pokretno opterecenje");
