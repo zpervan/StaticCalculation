@@ -51,5 +51,13 @@ void MainWindow::Show()
 
     ImGui::Text("Ukupno stalno opterecenje: %f %s", Values::UKUPNO_OPTERECENJE, GUI::Constants::KNM2);
 
+    ImGui::NewLine();
+    ImGui::Text("Pokretno opterecenje");
+    ImGui::Separator();
+    ImGui::NewLine();
+
+    GUI::InputFloatField("Za stambene prostorije: ", Values::STAMBENE_PROSTORIJE, GUI::Constants::KNM2);
+
+
     ImGui::End();
 }

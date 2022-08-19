@@ -11,6 +11,7 @@ static float PREGRADNI_ZIDOVI{0.0f};
 static float TEZINA_STROPNE_KONS{0.0f};
 static float PODGLED{0.0f};
 static float UKUPNO_OPTERECENJE{0.0f};
+static float STAMBENE_PROSTORIJE{0.0f};
 }
 
 #endif  // STATICCALCULATION_VALUES_H
