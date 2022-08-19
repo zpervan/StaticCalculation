@@ -1,5 +1,5 @@
-#ifndef STATICCALCULATION_FERT_H
-#define STATICCALCULATION_FERT_H
+#ifndef STATICCALCULATION_FERT_BACKEND_H
+#define STATICCALCULATION_FERT_BACKEND_H
 
 namespace Backend
 {
@@ -16,4 +16,4 @@ T calculateLoad(T value, Rest... rest)
 }
 }  // namespace Backend
 
-#endif  // STATICCALCULATION_FERT_H
+#endif  // STATICCALCULATION_FERT_BACKEND_H
