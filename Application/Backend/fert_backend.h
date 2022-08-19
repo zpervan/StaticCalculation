@@ -7,7 +7,11 @@
 namespace Backend
 {
 
-static std::map<std::string, float> fert_coefficients{{"Gotovi pod", 0.50f}};
+static std::pair<std::string, float> temporary_fert_coefficient;
+static std::map<std::string, float> fert_coefficients{};
+static std::map<std::string, float> fert_coefficients_database{{"Gotovi pod", 0.50f},
+                                                               {"Termoizolacija", 1.32f},
+                                                               {"Pregradni zidovi", 1.00f}};
 
 template <typename T>
 T calculateLoad(T value)
