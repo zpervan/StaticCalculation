@@ -52,12 +52,38 @@ void MainWindow::Show()
     ImGui::Text("Ukupno stalno opterecenje: %f %s", Values::UKUPNO_OPTERECENJE, GUI::Constants::KNM2);
 
     ImGui::NewLine();
-    ImGui::Text("Pokretno opterecenje");
-    ImGui::Separator();
+    ImGui::Text("A2. Pokretno opterecenje");
     ImGui::NewLine();
 
     GUI::InputFloatField("Za stambene prostorije: ", Values::STAMBENE_PROSTORIJE, GUI::Constants::KNM2);
 
+    ImGui::NewLine();
 
-    ImGui::End();
+    if (ImGui::BeginTable("table1", 5))
+    {
+
+        ImGui::TableSetupColumn("POZICIJA");
+        ImGui::TableSetupColumn("SVIJETLI RASPON IZMEDU ZIDOVA Io(m)");
+        ImGui::TableSetupColumn("STATICKI RASPON I(m)");
+        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - STALNO (kn)");
+        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - POKRETNO (kN)");
+        ImGui::TableHeadersRow();
+
+        for (int row = 0; row < 5; row++)
+        {
+            ImGui::TableNextRow();
+            for (int column = 0; column < 5; column++)
+            {
+                ImGui::TableSetColumnIndex(column);
+                char buf[32];
+                sprintf(buf, "Gumenje kamenje %d,%d", column, row);
+                ImGui::TextUnformatted(buf);
+//                ImGui::Button(buf, ImVec2(-FLT_MIN, 0.0f));
+            }
+        }
+
+        ImGui::EndTable();
+
+        ImGui::End();
+    }
 }
