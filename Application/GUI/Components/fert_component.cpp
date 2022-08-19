@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "Application/Backend/fert_backend.h"
-#include "Application/Core/values.h"
+#include "Application/Backend/values.h"
 #include "Application/GUI/Core/constants.h"
 #include "Application/GUI/Elements/input_fields.h"
 
@@ -25,20 +25,27 @@ void Fert::Show()
     ImGui::Separator();
     ImGui::NewLine();
     ImGui::Text("A1. Stalni teret");
-    GUI::InputFloatField("Gotovi pod: ", Values::GOTOVI_POD, GUI::Constants::KNM2);
-    GUI::InputFloatField("Estrih: ", Values::ESTRIH, GUI::Constants::KNM2);
-    GUI::InputFloatField("Termoizolacija: ", Values::TERMOIZOLACIJA, GUI::Constants::KNM2);
-    GUI::InputFloatField("Predgradni zidovi: ", Values::PREGRADNI_ZIDOVI, GUI::Constants::KNM2);
-    GUI::InputFloatField("Vlastita tezina stropne konstrukcije: ", Values::TEZINA_STROPNE_KONS, GUI::Constants::KNM2);
-    GUI::InputFloatField("Podgled: ", Values::PODGLED, GUI::Constants::KNM2);
-    ImGui::NewLine();
 
-    Values::UKUPNO_OPTERECENJE = Backend::calculateLoad(Values::GOTOVI_POD,
-                                                        Values::ESTRIH,
-                                                        Values::TERMOIZOLACIJA,
-                                                        Values::PREGRADNI_ZIDOVI,
-                                                        Values::TEZINA_STROPNE_KONS,
-                                                        Values::PODGLED);
+    /// @TODO: Generate ID has for table so we avoid ID collision
+    if (ImGui::BeginTable("##FertParametersTable", 2))
+    {
+        for (const auto& [key, value] : Backend::fert_coefficients)
+        {
+            ImGui::TableNextRow();
+
+            ImGui::TableSetColumnIndex(0);
+            ImGui::Text("%s", key.c_str());
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("%.2f", value);
+        }
+
+        ImGui::EndTable();
+    }
+
+    ImGui::Button("Dodaj");
+    ImGui::SameLine(0.0f, 10.0f);
+    ImGui::Button("Obrisi");
 
     ImGui::Text("Ukupno stalno opterecenje: %f %s", Values::UKUPNO_OPTERECENJE, GUI::Constants::KNM2);
 
