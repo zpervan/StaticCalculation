@@ -4,6 +4,8 @@ cc_library(
     name = "gui",
     srcs = glob([
         "Components/*",
+        "Core/*",
+        "Elements/*",
         "*.cpp",
     ]),
     hdrs = glob(["*.h"]),

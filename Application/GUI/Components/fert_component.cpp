@@ -1,28 +1,19 @@
-#include "main_window.h"
+#include "fert_component.h"
 
 #include <imgui.h>
 
 #include "Application/Backend/fert.h"
-#include "Application/Core/configuration.h"
 #include "Application/Core/values.h"
-#include "Application/GUI/Components/input_fields.h"
-#include "Application/GUI/constants.h"
+#include "Application/GUI/Core/constants.h"
+#include "Application/GUI/Elements/input_fields.h"
 
-namespace
+namespace GUI
 {
-ImGuiWindowFlags window_flags{ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration};
-}  // namespace
 
-MainWindow::MainWindow(EventSystem& event_system) : event_system_(event_system) {}
+Fert::Fert(EventSystem& event_system) : event_system_(event_system) {}
 
-void MainWindow::Show()
+void Fert::Show()
 {
-    ImGui::SetNextWindowPos({0.0f, Configuration::MENU_BAR_HEIGHT});
-    ImGui::SetNextWindowSize(
-        {Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT - Configuration::MENU_BAR_HEIGHT});
-
-    ImGui::Begin("##MainWindow", nullptr, window_flags);
-
     ImGui::Text("Staticka shema");
     ImGui::Separator();
     ImGui::Text("TODO: Dodaj sadrzaj");
@@ -78,12 +69,12 @@ void MainWindow::Show()
                 char buf[32];
                 sprintf(buf, "Gumenje kamenje %d,%d", column, row);
                 ImGui::TextUnformatted(buf);
-//                ImGui::Button(buf, ImVec2(-FLT_MIN, 0.0f));
+                //                ImGui::Button(buf, ImVec2(-FLT_MIN, 0.0f));
             }
         }
 
         ImGui::EndTable();
-
-        ImGui::End();
     }
 }
+
+}  // namespace GUI

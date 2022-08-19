@@ -7,8 +7,8 @@
 
 #include "Application/Core/configuration.h"
 #include "Application/Core/paths.h"
-#include "Application/GUI/main_window.h"
-#include "Application/GUI/menu_bar.h"
+#include "Application/GUI/Core/main_window.h"
+#include "Application/GUI/Core/menu_bar.h"
 #include "Core/event_system.h"
 
 static void glfw_error_callback(int error, const char* description)
@@ -64,7 +64,7 @@ int main(int, char**)
 
     // Custom GUI components
     MenuBar menu_bar{event_system};
-    MainWindow main_window{event_system};
+    GUI::MainWindow main_window{event_system};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !isDone)
