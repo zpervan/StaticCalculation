@@ -6,44 +6,24 @@
 #include <algorithm>
 #include <map>
 
-#include "Application/Backend/values.h"
+#include "Application/Backend/fert_backend.h"
+#include "Application/Core/event_system.h"
 
 namespace GUI
 {
 
-static inline void ComboBox(const std::map<std::string, float>& values, std::pair<std::string, float>& selected_value)
+class ComboBox
 {
-    ImGui::SetNextItemWidth(200.0f);
-    static int current_coefficient_idx{0};
-    const auto preview_value{std::next(values.begin(), current_coefficient_idx)->first.c_str()};
+  public:
+    ComboBox(EventSystem& event_system);
+    void Show(const std::map<std::string, float>& values, std::pair<std::string, float>& selected_value);
 
-    if(selected_value.first.empty())
-    {
-        selected_value = *std::next(values.begin(), current_coefficient_idx);
-    }
-
-    if (ImGui::BeginCombo("##ComboBox", preview_value, ImGuiComboFlags_None))
-    {
-        for (std::size_t i = 0; i < values.size(); ++i)
-        {
-            const bool is_selected{current_coefficient_idx == i};
-
-            if (ImGui::Selectable(std::next(values.begin(), i)->first.c_str(), is_selected))
-            {
-                current_coefficient_idx = i;
-                selected_value = *std::next(values.begin(), current_coefficient_idx);
-                spdlog::info("Setting coefficient value {}", std::next(values.begin(), current_coefficient_idx)->first);
-            }
-
-            if (is_selected)
-            {
-                ImGui::SetItemDefaultFocus();
-            }
-        }
-        ImGui::EndCombo();
-    }
-}
-
+  private:
+    EventSystem& event_system_;
+    /// @TODO: Add ID management system
+    std::string combo_box_label_;
+    int current_coefficient_idx_{0};
+};
 }  // namespace GUI
 
 #endif  // STATICCALCULATION_COMBO_BOX_H

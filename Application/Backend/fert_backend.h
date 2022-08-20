@@ -7,11 +7,19 @@
 namespace Backend
 {
 
-static std::pair<std::string, float> selected_fert_coefficient;
-static std::map<std::string, float> fert_coefficients{};
-static std::map<std::string, float> fert_coefficients_database{{"Gotovi pod", 0.50f},
-                                                               {"Termoizolacija", 1.32f},
-                                                               {"Pregradni zidovi", 1.00f}};
+/// @TODO: Once the database functionality created, refactor this
+struct LoadCoefficients
+{
+    std::pair<std::string, float> selected_load_coefficient{};
+    std::map<std::string, float> populated_load_coefficients{};
+    std::map<std::string, float> load_coefficients_database{};
+};
+
+static std::map<std::string, float> constant_load_coefficients_database{{"Gotovi pod", 0.50f},
+                                                                        {"Termoizolacija", 1.32f},
+                                                                        {"Pregradni zidovi", 1.00f}};
+
+static std::map<std::string, float> moving_load_coefficients_database{{"Stambene prostorije", 2.00f}};
 
 template <typename T>
 T calculateLoad(T value)
