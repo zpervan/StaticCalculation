@@ -10,6 +10,11 @@
 #include "Application/GUI/Elements/input_fields.h"
 #include "Application/GUI/Elements/text_with_padding.h"
 
+namespace
+{
+static std::string coefficient_to_remove{};
+}
+
 namespace GUI
 {
 
@@ -25,7 +30,7 @@ void Fert::Show()
     ImGui::Text("A1. Stalni teret");
 
     /// @TODO: Generate ID has for table so we avoid ID collision
-    if (ImGui::BeginTable("##FertParametersTable", 2, ImGuiTableFlags_SizingFixedSame))
+    if (ImGui::BeginTable("##FertParametersTable", 3, ImGuiTableFlags_SizingFixedSame))
     {
         if (Backend::fert_coefficients.empty())
         {
@@ -38,6 +43,12 @@ void Fert::Show()
             ImGui::Text("    -    ");
         }
 
+        if (!coefficient_to_remove.empty())
+        {
+            Backend::fert_coefficients.erase(coefficient_to_remove);
+            coefficient_to_remove.clear();
+        }
+
         for (const auto& [key, value] : Backend::fert_coefficients)
         {
             ImGui::TableNextRow();
@@ -47,6 +58,16 @@ void Fert::Show()
 
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%.2f", value);
+
+            ImGui::TableSetColumnIndex(2);
+
+            /// @TODO: Create label Id generator
+            std::string label{"X##" + key};
+            if (ImGui::Button(label.c_str(), {20.0f, 0.0f}))
+            {
+                spdlog::info("Removing Fert coefficient {}", key);
+                coefficient_to_remove = key;
+            };
         }
 
         ImGui::EndTable();
@@ -93,7 +114,6 @@ void Fert::Show()
                 char buf[32];
                 sprintf(buf, "Gumenje kamenje %d,%d", column, row);
                 ImGui::TextUnformatted(buf);
-                //                ImGui::Button(buf, ImVec2(-FLT_MIN, 0.0f));
             }
         }
 
