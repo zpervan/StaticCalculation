@@ -24,7 +24,7 @@ static inline void ComboBox(const std::map<std::string, float>& values, std::pai
 
     if (ImGui::BeginCombo("##ComboBox", preview_value, ImGuiComboFlags_None))
     {
-        for (int i = 0; i < values.size(); ++i)
+        for (std::size_t i = 0; i < values.size(); ++i)
         {
             const bool is_selected{current_coefficient_idx == i};
 

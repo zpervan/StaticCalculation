@@ -8,6 +8,7 @@
 #include "Application/GUI/Core/constants.h"
 #include "Application/GUI/Elements/combo_box.h"
 #include "Application/GUI/Elements/input_fields.h"
+#include "Application/GUI/Elements/text_with_padding.h"
 
 namespace GUI
 {
@@ -16,16 +17,11 @@ Fert::Fert(EventSystem& event_system) : event_system_(event_system) {}
 
 void Fert::Show()
 {
-    ImGui::Text("Staticka shema");
-    ImGui::Separator();
-    ImGui::Text("TODO: Dodaj sadrzaj");
+    GUI::TextWithPadding("Staticka shema", true);
+    GUI::TextWithPadding("TODO: Dodaj sadrzaj");
     /// @TODO: Add content
 
-    ImGui::NewLine();
-
-    ImGui::Text("Analiza opterecenja");
-    ImGui::Separator();
-    ImGui::NewLine();
+    GUI::TextWithPadding("Analiza opterecenja", true);
     ImGui::Text("A1. Stalni teret");
 
     /// @TODO: Generate ID has for table so we avoid ID collision
@@ -72,13 +68,8 @@ void Fert::Show()
     };
 
     ImGui::SameLine(0.0f, 10.0f);
-
     GUI::ComboBox(Backend::fert_coefficients_database, Backend::selected_fert_coefficient);
-
-    ImGui::NewLine();
-    ImGui::Text("A2. Pokretno opterecenje");
-    ImGui::NewLine();
-
+    GUI::TextWithPadding("A2. Pokretno opterecenje", false);
     GUI::InputFloatField("Za stambene prostorije: ", Values::STAMBENE_PROSTORIJE, GUI::Constants::KNM2);
 
     ImGui::NewLine();
