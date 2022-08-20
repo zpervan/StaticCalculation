@@ -6,6 +6,7 @@
 #include "Application/Backend/fert_backend.h"
 #include "Application/Backend/values.h"
 #include "Application/GUI/Core/constants.h"
+#include "Application/GUI/Elements/combo_box.h"
 #include "Application/GUI/Elements/input_fields.h"
 
 namespace GUI
@@ -28,8 +29,19 @@ void Fert::Show()
     ImGui::Text("A1. Stalni teret");
 
     /// @TODO: Generate ID has for table so we avoid ID collision
-    if (ImGui::BeginTable("##FertParametersTable", 2))
+    if (ImGui::BeginTable("##FertParametersTable", 2, ImGuiTableFlags_SizingFixedSame))
     {
+        if (Backend::fert_coefficients.empty())
+        {
+            ImGui::TableNextRow();
+
+            ImGui::TableSetColumnIndex(0);
+            ImGui::Text("    -    ");
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("    -    ");
+        }
+
         for (const auto& [key, value] : Backend::fert_coefficients)
         {
             ImGui::TableNextRow();
@@ -41,67 +53,27 @@ void Fert::Show()
             ImGui::Text("%.2f", value);
         }
 
-        if (event_system_.Poll() == Events::Add)
-        {
-            ImGui::TableNextRow();
-
-            ImGui::TableSetColumnIndex(0);
-
-            static int current_coefficient_idx{0};
-            const auto preview_value{
-                std::next(Backend::fert_coefficients_database.begin(), current_coefficient_idx)->first.c_str()};
-
-            if (ImGui::BeginCombo("##FertCoefficientsComboBox", preview_value, ImGuiComboFlags_None))
-            {
-                for (int i = 0; i < Backend::fert_coefficients_database.size(); ++i)
-                {
-                    const auto it{Backend::fert_coefficients_database.begin()};
-                    const bool is_selected = (current_coefficient_idx == i);
-
-                    if (ImGui::Selectable(std::next(it, i)->first.c_str(), is_selected))
-                    {
-                        current_coefficient_idx = i;
-                        Backend:Backend::temporary_fert_coefficient = *std::next(it, current_coefficient_idx);
-                        spdlog::info("Setting Fert coefficient value {}", std::next(it, current_coefficient_idx)->first);
-                    }
-
-                    if (is_selected) ImGui::SetItemDefaultFocus();
-                }
-                ImGui::EndCombo();
-            }
-        }
-
         ImGui::EndTable();
     }
 
-    static std::string button_text{"Dodaj"};
-
-    if (ImGui::Button(button_text.c_str()))
-    {
-        if(event_system_.Poll() == Events::None)
-        {
-            event_system_.Set(Events::Add);
-            button_text = "Zavrsi";
-        }
-        else
-        {
-            Backend::fert_coefficients.emplace(Backend::temporary_fert_coefficient);
-            event_system_.Set(Events::None);
-            button_text = "Dodaj";
-        }
-    };
-
-    ImGui::SameLine(0.0f, 10.0f);
-    ImGui::Button("Obrisi");
-
+    /// @TODO: Extract into a function
     Values::UKUPNO_OPTERECENJE = 0;
 
-    for(const auto & [key, value] : Backend::fert_coefficients)
+    for (const auto& [key, value] : Backend::fert_coefficients)
     {
         Values::UKUPNO_OPTERECENJE += value;
     }
 
     ImGui::Text("Ukupno stalno opterecenje: %.2f %s", Values::UKUPNO_OPTERECENJE, GUI::Constants::KNM2);
+
+    if (ImGui::Button("Dodaj"))
+    {
+        Backend::fert_coefficients.emplace(Backend::selected_fert_coefficient);
+    };
+
+    ImGui::SameLine(0.0f, 10.0f);
+
+    GUI::ComboBox(Backend::fert_coefficients_database, Backend::selected_fert_coefficient);
 
     ImGui::NewLine();
     ImGui::Text("A2. Pokretno opterecenje");
