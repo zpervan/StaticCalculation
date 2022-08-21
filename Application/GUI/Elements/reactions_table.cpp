@@ -50,31 +50,33 @@ void ReactionsTable::Show()
         ImGui::TableSetupColumn("-");
         ImGui::TableHeadersRow();
 
-        for (auto& row : reactions_table_parameters_)
+        for (std::size_t i = 0; i < reactions_table_parameters_.size(); ++i)
         {
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::InputScalar("##Position", ImGuiDataType_U32, &row.position);
+            std::string position_label_id{fmt::format("##Position{}", i)};
+            ImGui::InputScalar(position_label_id.c_str(), ImGuiDataType_U32, &reactions_table_parameters_[i].position);
 
             ImGui::TableSetColumnIndex(1);
-            ImGui::InputScalar("##DistanceBetweenWalls", ImGuiDataType_Float, &row.distance_between_walls);
+            std::string distance_walls_label_id{fmt::format("##DistanceBetweenWalls{}", i)};
+            ImGui::InputScalar(distance_walls_label_id.c_str(), ImGuiDataType_Float, &reactions_table_parameters_[i].distance_between_walls);
 
             ImGui::TableSetColumnIndex(2);
-            row.static_distance = 1.05f * row.distance_between_walls;
-            ImGui::Text("%.2f", row.static_distance);
+            reactions_table_parameters_[i].static_distance = 1.05f * reactions_table_parameters_[i].distance_between_walls;
+            ImGui::Text("%.2f", reactions_table_parameters_[i].static_distance);
 
             ImGui::TableSetColumnIndex(3);
-            row.reaction_ra = (row.static_distance * *constant_load_sum_) / 2.0f;
-            ImGui::Text("%.2f", row.reaction_ra);
+            reactions_table_parameters_[i].reaction_ra = (reactions_table_parameters_[i].static_distance * *constant_load_sum_) / 2.0f;
+            ImGui::Text("%.2f", reactions_table_parameters_[i].reaction_ra);
 
             ImGui::TableSetColumnIndex(4);
-            row.reaction_rb = (row.static_distance * *moving_load_sum_) / 2.0f;
-            ImGui::Text("%.2f", row.reaction_rb);
+            reactions_table_parameters_[i].reaction_rb = (reactions_table_parameters_[i].static_distance * *moving_load_sum_) / 2.0f;
+            ImGui::Text("%.2f", reactions_table_parameters_[i].reaction_rb);
 
             ImGui::TableSetColumnIndex(5);
-            std::string label{"X##"};
-            if (ImGui::Button(label.c_str(), {20.0f, 0.0f}))
+            std::string delete_label_id{fmt::format("##X{}", i)};
+            if (ImGui::Button(delete_label_id.c_str(), {20.0f, 0.0f}))
             {
                 /// @TODO: Implement removal logic
                 // load_coefficient_to_remove = key;
