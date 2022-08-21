@@ -3,8 +3,6 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
-#include <utility>
-
 #include "Application/GUI/Core/constants.h"
 #include "Application/GUI/Core/id.h"
 
@@ -29,6 +27,11 @@ void CoefficientTable::SetLoadCoefficients(Backend::LoadCoefficients* load_coeff
     {
         load_coefficients_ = std::make_unique<Backend::LoadCoefficients>(*load_coefficients);
     }
+}
+
+void CoefficientTable::SetSummaryResultVariable(float& summary_result)
+{
+    summary_result_ = &summary_result;
 }
 
 void CoefficientTable::Show()
@@ -75,13 +78,13 @@ void CoefficientTable::Show()
         ImGui::EndTable();
     }
 
-    float constant_load_sum{0.0f};
+    *summary_result_ = 0.0f;
     for (const auto& [key, value] : load_coefficients_->populated_load_coefficients)
     {
-        constant_load_sum += value;
+        *summary_result_ += value;
     }
 
-    ImGui::Text("Ukupno opterecenje: %.2f %s", constant_load_sum, GUI::Constants::KNM2);
+    ImGui::Text("Ukupno opterecenje: %.2f %s", *summary_result_, GUI::Constants::KNM2);
 
     if (ImGui::Button(add_button_label_.c_str()))
     {
@@ -99,7 +102,8 @@ bool CoefficientTable::ElementToRemoveExits()
     bool element_exists{true};
 
     element_exists &= !load_coefficient_to_remove.empty();
-    element_exists &= load_coefficients_->populated_load_coefficients.find(load_coefficient_to_remove) != load_coefficients_->populated_load_coefficients.end();
+    element_exists &= load_coefficients_->populated_load_coefficients.find(load_coefficient_to_remove) !=
+                      load_coefficients_->populated_load_coefficients.end();
 
     return element_exists;
 }

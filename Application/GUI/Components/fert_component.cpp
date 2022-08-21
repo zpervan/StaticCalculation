@@ -13,15 +13,21 @@ namespace GUI
 Fert::Fert(EventSystem& event_system)
     : event_system_(event_system),
       constant_load_table_(CoefficientTable(event_system_)),
-      moving_load_table_(CoefficientTable(event_system_))
+      moving_load_table_(CoefficientTable(event_system_)),
+      summary_table_(event_system_)
 {
-    auto * constant_load_coefficients = new Backend::LoadCoefficients();
+    auto* constant_load_coefficients = new Backend::LoadCoefficients();
     constant_load_coefficients->load_coefficients_database = Backend::constant_load_coefficients_database;
     constant_load_table_.SetLoadCoefficients(constant_load_coefficients);
+    constant_load_table_.SetSummaryResultVariable(Backend::constant_load_sum);
 
-    auto * moving_load_coefficients = new Backend::LoadCoefficients();;
+    auto* moving_load_coefficients = new Backend::LoadCoefficients();
     moving_load_coefficients->load_coefficients_database = Backend::moving_load_coefficients_database;
     moving_load_table_.SetLoadCoefficients(moving_load_coefficients);
+    moving_load_table_.SetSummaryResultVariable(Backend::moving_load_sum);
+
+    summary_table_.SetConstantLoadSum(Backend::constant_load_sum);
+    summary_table_.SetMovingLoadSum(Backend::moving_load_sum);
 }
 
 void Fert::Show()
@@ -38,31 +44,9 @@ void Fert::Show()
     GUI::TextWithPadding("A2. Pokretno opterecenje");
     moving_load_table_.Show();
 
-    ImGui::NewLine();
+    ImGui::Separator();
 
-    if (ImGui::BeginTable("##FertMovingLoadTable", 5, ImGuiTableFlags_Borders))
-    {
-        ImGui::TableSetupColumn("POZICIJA");
-        ImGui::TableSetupColumn("SVIJETLI RASPON IZMEDU ZIDOVA Io(m)");
-        ImGui::TableSetupColumn("STATICKI RASPON I(m)");
-        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - STALNO (kn)");
-        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - POKRETNO (kN)");
-        ImGui::TableHeadersRow();
-
-        for (int row = 0; row < 5; row++)
-        {
-            ImGui::TableNextRow();
-            for (int column = 0; column < 5; column++)
-            {
-                ImGui::TableSetColumnIndex(column);
-                char buf[32];
-                sprintf(buf, "Gumenje kamenje %d,%d", column, row);
-                ImGui::TextUnformatted(buf);
-            }
-        }
-
-        ImGui::EndTable();
-    }
+    summary_table_.Show();
 }
 
 }  // namespace GUI

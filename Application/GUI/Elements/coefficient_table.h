@@ -15,6 +15,7 @@ class CoefficientTable
   public:
     CoefficientTable(EventSystem& event_system);
     void SetLoadCoefficients(Backend::LoadCoefficients* load_coefficients);
+    void SetSummaryResultVariable(float& summary_result);
     void Show();
 
   private:
@@ -26,6 +27,7 @@ class CoefficientTable
     std::unique_ptr<Backend::LoadCoefficients> load_coefficients_;
     std::string load_table_label_;
     std::string add_button_label_;
+    float * summary_result_;
 };
 
 }  // namespace GUI
