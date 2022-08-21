@@ -7,10 +7,9 @@
 
 #include "Application/GUI/Core/constants.h"
 
-static std::size_t component_id{0};
-
 namespace
 {
+std::size_t component_id{0};
 std::string load_coefficient_to_remove{};
 }
 
@@ -83,7 +82,7 @@ void CoefficientTable::Show()
         constant_load_sum += value;
     }
 
-    ImGui::Text("Ukupno stalno opterecenje: %.2f %s", constant_load_sum, GUI::Constants::KNM2);
+    ImGui::Text("Ukupno opterecenje: %.2f %s", constant_load_sum, GUI::Constants::KNM2);
 
     if (ImGui::Button(add_button_label_.c_str()))
     {

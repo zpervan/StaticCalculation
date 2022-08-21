@@ -19,7 +19,8 @@ static std::map<std::string, float> constant_load_coefficients_database{{"Gotovi
                                                                         {"Termoizolacija", 1.32f},
                                                                         {"Pregradni zidovi", 1.00f}};
 
-static std::map<std::string, float> moving_load_coefficients_database{{"Stambene prostorije", 2.00f}};
+static std::map<std::string, float> moving_load_coefficients_database{{"Stambene prostorije", 2.00f},
+                                                                      {"Ravni krov", 1.00f}};
 
 template <typename T>
 T calculateLoad(T value)

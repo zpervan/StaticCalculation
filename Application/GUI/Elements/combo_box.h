@@ -22,7 +22,7 @@ class ComboBox
     EventSystem& event_system_;
     /// @TODO: Add ID management system
     std::string combo_box_label_;
-    int current_coefficient_idx_{0};
+    std::size_t current_coefficient_idx_{0};
 };
 }  // namespace GUI
 
