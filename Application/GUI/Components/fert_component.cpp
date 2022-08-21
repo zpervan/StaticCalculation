@@ -15,12 +15,12 @@ Fert::Fert(EventSystem& event_system)
       constant_load_table_(CoefficientTable(event_system_)),
       moving_load_table_(CoefficientTable(event_system_))
 {
-    Backend::LoadCoefficients constant_load_coefficients;
-    constant_load_coefficients.load_coefficients_database = Backend::constant_load_coefficients_database;
+    auto * constant_load_coefficients = new Backend::LoadCoefficients();
+    constant_load_coefficients->load_coefficients_database = Backend::constant_load_coefficients_database;
     constant_load_table_.SetLoadCoefficients(constant_load_coefficients);
 
-    Backend::LoadCoefficients moving_load_coefficients;
-    moving_load_coefficients.load_coefficients_database = Backend::moving_load_coefficients_database;
+    auto * moving_load_coefficients = new Backend::LoadCoefficients();;
+    moving_load_coefficients->load_coefficients_database = Backend::moving_load_coefficients_database;
     moving_load_table_.SetLoadCoefficients(moving_load_coefficients);
 }
 
