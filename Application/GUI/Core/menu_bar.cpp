@@ -26,9 +26,13 @@ void MenuBar::Show()
 
         if (ImGui::BeginMenu("Applikacija"))
         {
+            ImGui::MenuItem("Dodaj koeficijente");
+
+            ImGui::Separator();
+
             ImGui::MenuItem("Ponovno pokreni", nullptr);
 
-            if (ImGui::MenuItem("Ugasi", nullptr))
+            if (ImGui::MenuItem("Izlaz", nullptr))
             {
                 spdlog::info("Exiting application...");
                 event_system_.Set(Events::Exit);
