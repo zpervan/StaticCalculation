@@ -6,10 +6,10 @@
 #include <utility>
 
 #include "Application/GUI/Core/constants.h"
+#include "Application/GUI/Core/id.h"
 
 namespace
 {
-std::size_t component_id{0};
 std::string load_coefficient_to_remove{};
 }
 
@@ -19,9 +19,8 @@ namespace GUI
 CoefficientTable::CoefficientTable(EventSystem& event_system)
     : event_system_(event_system), load_coefficient_combo_box_(ComboBox(event_system_))
 {
-    load_table_label_ = fmt::format("##LoadTable{}", component_id);
-    add_button_label_ = fmt::format("Dodaj##{}", component_id);
-    component_id += 1;
+    load_table_label_ = fmt::format("##LoadTable{}", Id::GenerateId());
+    add_button_label_ = fmt::format("Dodaj##{}", Id::GenerateId());
 }
 
 void CoefficientTable::SetLoadCoefficients(Backend::LoadCoefficients* load_coefficients)

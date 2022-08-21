@@ -2,12 +2,11 @@
 
 #include <spdlog/spdlog.h>
 
-static std::size_t component_id{0};
+#include "Application/GUI/Core/id.h"
 
 GUI::ComboBox::ComboBox(EventSystem& event_system) : event_system_(event_system)
 {
-    combo_box_label_ = fmt::format("##ComboBox{}", component_id);
-    component_id += 1;
+    combo_box_label_ = fmt::format("##ComboBox{}", Id::GenerateId());
 }
 
 void GUI::ComboBox::Show(const std::map<std::string, float>& values, std::pair<std::string, float>& selected_value)
@@ -31,7 +30,8 @@ void GUI::ComboBox::Show(const std::map<std::string, float>& values, std::pair<s
             {
                 current_coefficient_idx_ = i;
                 selected_value = *std::next(values.begin(), current_coefficient_idx_);
-                spdlog::info("Setting coefficient value {}", std::next(values.begin(), current_coefficient_idx_)->first);
+                spdlog::info("Setting coefficient value {}",
+                             std::next(values.begin(), current_coefficient_idx_)->first);
             }
 
             if (is_selected)
