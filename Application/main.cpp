@@ -2,11 +2,12 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <stdio.h>
 #include <spdlog/spdlog.h>
+#include <stdio.h>
 
 #include "Application/Core/configuration.h"
 #include "Application/Core/paths.h"
+#include "Application/GUI/Components/coefficient_database.h"
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
 #include "Core/event_system.h"
@@ -29,7 +30,8 @@ int main(int, char**)
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT, "Statika - Torzo", NULL, NULL);
+    GLFWwindow* window =
+        glfwCreateWindow(Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT, "Statika - Torzo", NULL, NULL);
 
     if (window == NULL)
     {
@@ -63,8 +65,9 @@ int main(int, char**)
     bool isDone{false};
 
     // Custom GUI components
-    MenuBar menu_bar{event_system};
+    GUI::MenuBar menu_bar{event_system};
     GUI::MainWindow main_window{event_system};
+    GUI::CoefficientDatabase coefficient_database{event_system};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !isDone)
@@ -86,6 +89,11 @@ int main(int, char**)
         {
             menu_bar.Show();
             main_window.Show();
+
+            if (event_system.Poll() == Events::CoefficientDatabase_OpenWindow)
+            {
+                coefficient_database.Show();
+            }
         }
 
         // Rendering
@@ -93,7 +101,8 @@ int main(int, char**)
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClearColor(
+            clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

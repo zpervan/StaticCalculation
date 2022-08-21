@@ -3,6 +3,9 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
+namespace GUI
+{
+
 MenuBar::MenuBar(EventSystem& event_system) : event_system_(event_system) {}
 
 void MenuBar::Show()
@@ -26,7 +29,11 @@ void MenuBar::Show()
 
         if (ImGui::BeginMenu("Applikacija"))
         {
-            ImGui::MenuItem("Dodaj koeficijente");
+            if (ImGui::MenuItem("Baza koeficijenata"))
+            {
+                spdlog::info("Opening coefficient database");
+                event_system_.Set(Events::CoefficientDatabase_OpenWindow);
+            }
 
             ImGui::Separator();
 
@@ -52,3 +59,5 @@ void MenuBar::Show()
         ImGui::EndMainMenuBar();
     }
 }
+
+}  // namespace GUI

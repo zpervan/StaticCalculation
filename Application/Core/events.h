@@ -11,7 +11,8 @@ enum class Events
     SavingConfirmed,
     Loading,
     LoadingConfirmed,
-    Exit
+    Exit,
+    CoefficientDatabase_OpenWindow
 };
 
 #endif  // STATICCALCULATION_EVENTS_H

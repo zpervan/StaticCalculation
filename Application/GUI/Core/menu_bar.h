@@ -3,6 +3,9 @@
 
 #include "Application/Core/event_system.h"
 
+namespace GUI
+{
+
 class MenuBar
 {
   public:
@@ -12,5 +15,7 @@ class MenuBar
   private:
     EventSystem& event_system_;
 };
+
+}  // namespace GUI
 
 #endif  // STATICCALCULATION_MENU_BAR_H

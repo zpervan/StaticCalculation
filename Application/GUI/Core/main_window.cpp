@@ -7,7 +7,8 @@
 
 namespace
 {
-ImGuiWindowFlags window_flags{ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration};
+ImGuiWindowFlags main_window_flags{ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration |
+                              ImGuiWindowFlags_NoBringToFrontOnFocus};
 }  // namespace
 
 namespace GUI
@@ -18,10 +19,9 @@ MainWindow::MainWindow(EventSystem& event_system) : event_system_(event_system),
 void MainWindow::Show()
 {
     ImGui::SetNextWindowPos({0.0f, Configuration::MENU_BAR_HEIGHT});
-    ImGui::SetNextWindowSize(
-        {Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT - Configuration::MENU_BAR_HEIGHT});
+    ImGui::SetNextWindowSize({Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT - Configuration::MENU_BAR_HEIGHT});
 
-    ImGui::Begin("##MainWindow", nullptr, window_flags);
+    ImGui::Begin("##MainWindow", nullptr, main_window_flags);
 
     ImGui::BeginTabBar("##MainWindowTabBar");
 
