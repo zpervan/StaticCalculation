@@ -4,7 +4,10 @@ load("@bazel_skylib//rules:copy_directory.bzl", "copy_directory")
 cc_binary(
     name = "main",
     srcs = ["Application/main.cpp"],
-    data = ["//Application/Assets:fonts", "//:copy_assets"],
+    data = [
+        "//:copy_assets",
+        "//Application/Assets:fonts",
+    ],
     deps = [
         "//Application/GUI:gui",
         "@imguilib//:imgui",
