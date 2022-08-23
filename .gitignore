@@ -5,3 +5,6 @@
 # Settings files
 **/.clwb
 **/.idea
+
+# Release folder
+**/StatikaTorzo*

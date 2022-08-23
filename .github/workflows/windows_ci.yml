@@ -24,3 +24,12 @@ jobs:
           bazel build @imguilib//:imgui-demo --config=windows-ci
           bazel build //:main --config=windows-ci -c dbg
           bazel build //:main --config=windows-ci -c opt
+
+      - name: Create Artifacts
+        run: .\Scripts\create_release_package_windows.ps1
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: StatikaTorzo.zip
