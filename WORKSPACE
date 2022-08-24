@@ -30,6 +30,11 @@ local_repository(
 )
 
 local_repository(
+    name = "jsonlib",
+    path = "ThirdParty/json/",
+)
+
+local_repository(
     name = "spdloglib",
     path = "ThirdParty/spdlog/",
 )
