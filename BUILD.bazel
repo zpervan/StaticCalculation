@@ -1,22 +1,14 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("@bazel_skylib//rules:copy_directory.bzl", "copy_directory")
 
 cc_binary(
     name = "main",
     srcs = ["Application/main.cpp"],
     data = [
-        "//:copy_assets",
-        "//Application/Assets:fonts",
+        "//Application/Assets:copy_assets",
     ],
     deps = [
         "//Application/GUI:gui",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
     ],
-)
-
-copy_directory(
-    name = "copy_assets",
-    src = "Application/Assets",
-    out = "Application/Assets",
 )

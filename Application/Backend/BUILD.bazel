@@ -1,4 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
 cc_library(
     name = "backend",
@@ -9,7 +9,9 @@ cc_library(
     hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//Application/Core:core",
         "@imguilib//:imgui",
+        "@jsonlib//:json",
         "@spdloglib//:spdlog",
     ],
 )

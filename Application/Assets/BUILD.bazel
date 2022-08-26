@@ -1,5 +1,17 @@
+load("@bazel_skylib//rules:copy_directory.bzl", "copy_directory")
+
+package(default_visibility = ["//visibility:public"])
+
 filegroup(
     name = "fonts",
-    srcs = glob(["Fonts/*.ttf"]),
-    visibility = ["//visibility:public"],
+    srcs = glob([
+        "Coefficients/*.json",
+        "Fonts/*.ttf",
+    ]),
+)
+
+copy_directory(
+    name = "copy_assets",
+    src = ".",
+    out = ".",
 )

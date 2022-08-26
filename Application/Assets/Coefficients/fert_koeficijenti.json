@@ -1,0 +1,11 @@
+{
+  "stalni_teret": {
+    "gotovi_pod": 0.5,
+    "termoizolacija": 1.32,
+    "pregradni_zidovi": 1.0
+  },
+  "pokretni_teret": {
+    "stambene_prostorije": 2.0,
+    "ravni_krov": 1.0
+  }
+}

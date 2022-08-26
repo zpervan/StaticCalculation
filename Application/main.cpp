@@ -11,6 +11,7 @@
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
 #include "Core/event_system.h"
+#include "Application/Backend/coefficient_parser.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -19,6 +20,7 @@ static void glfw_error_callback(int error, const char* description)
 
 int main(int, char**)
 {
+    CoefficientParser::Load();
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit()) return 1;
@@ -48,7 +50,7 @@ int main(int, char**)
     ImGuiIO& io = ImGui::GetIO();
 
     /// @TODO: Add assets manager
-    io.Fonts->AddFontFromFileTTF(Paths::AssetsPath().c_str(), Configuration::FONT_SIZE);
+    io.Fonts->AddFontFromFileTTF(Paths::ArialFontPath().c_str(), Configuration::FONT_SIZE);
     io.FontDefault = io.Fonts->Fonts[0];
 
     // Setup Dear ImGui style

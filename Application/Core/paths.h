@@ -15,9 +15,13 @@
 namespace
 {
 #ifdef WIN32
-static constexpr auto Assets_Directory{"\\Application\\Assets\\Fonts\\arial.ttf"};
+static constexpr auto Assets_Directory{"\\Application\\Assets"};
+static constexpr auto Arial_Font_File{"\\Fonts\\arial.ttf"};
+static constexpr auto Fert_Coefficients_File{"\\Coefficients\\fert_koeficijenti.json"};
 #else
-static constexpr auto Assets_Directory{"/Application/Assets/Fonts/arial.ttf"};
+static constexpr auto Assets_Directory{"/Application/Assets"};
+static constexpr auto Arial_Font_File{"/Fonts/arial.ttf"};
+static constexpr auto Fert_Coefficients_File{"/Coefficients/fert_koeficijenti.json"};
 #endif
 }
 
@@ -39,16 +43,18 @@ std::filesystem::path RootPath()
 #endif
 
     const auto root_path = std::filesystem::path(szPath).parent_path();
-    spdlog::info("Root path: {}", root_path.string());
 
     return root_path;
 }
 
-std::string AssetsPath()
+std::string ArialFontPath()
 {
-    const auto assets_path = RootPath().string() + Assets_Directory;
-    spdlog::info("Assets path: {}", assets_path);
-    return assets_path;
+    return RootPath().string() + Assets_Directory + Arial_Font_File;
+}
+
+std::string FertCoefficientFilePath()
+{
+    return RootPath().string() + Assets_Directory + Fert_Coefficients_File;
 }
 
 }  // namespace Paths
