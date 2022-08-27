@@ -2,7 +2,9 @@
   "stalni_teret": {
     "gotovi_pod": 0.5,
     "termoizolacija": 1.32,
-    "pregradni_zidovi": 1.0
+    "pregradni_zidovi": 1.0,
+    "vlastita_tezina_gotove_stropne_konstrukcije": 3.20,
+    "podgled": 0.38
   },
   "pokretni_teret": {
     "stambene_prostorije": 2.0,
