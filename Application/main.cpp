@@ -2,7 +2,6 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <spdlog/spdlog.h>
 #include <stdio.h>
 
 #include "Application/Core/configuration.h"
@@ -11,7 +10,6 @@
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
 #include "Core/event_system.h"
-#include "Application/Backend/coefficient_parser.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -20,7 +18,6 @@ static void glfw_error_callback(int error, const char* description)
 
 int main(int, char**)
 {
-    CoefficientParser::Load();
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit()) return 1;
@@ -67,9 +64,9 @@ int main(int, char**)
     bool isDone{false};
 
     // Custom GUI components
+    GUI::CoefficientDatabase coefficient_database{event_system};
     GUI::MenuBar menu_bar{event_system};
     GUI::MainWindow main_window{event_system};
-    GUI::CoefficientDatabase coefficient_database{event_system};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !isDone)

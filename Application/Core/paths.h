@@ -30,7 +30,7 @@ namespace Paths
 
 /// @brief Returns the path of the application executable based on OS.
 /// @return Path to executable root directory
-std::filesystem::path RootPath()
+inline std::filesystem::path RootPath()
 {
 #ifdef WIN32
     wchar_t szPath[MAX_PATH];
@@ -47,12 +47,12 @@ std::filesystem::path RootPath()
     return root_path;
 }
 
-std::string ArialFontPath()
+inline std::string ArialFontPath()
 {
     return RootPath().string() + Assets_Directory + Arial_Font_File;
 }
 
-std::string FertCoefficientFilePath()
+inline std::string FertCoefficientFilePath()
 {
     return RootPath().string() + Assets_Directory + Fert_Coefficients_File;
 }

@@ -5,7 +5,8 @@
 
 namespace Util
 {
-std::string ProcessString(const std::string& string)
+
+inline std::string ProcessString(const std::string& string)
 {
     std::string processed_string{string};
 

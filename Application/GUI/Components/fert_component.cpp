@@ -16,13 +16,15 @@ Fert::Fert(EventSystem& event_system)
       moving_load_table_(CoefficientTable(event_system_)),
       summary_table_(event_system_)
 {
+    Backend::PopulateCoefficientDatabase();
+
     auto* constant_load_coefficients = new Backend::LoadCoefficients();
-    constant_load_coefficients->load_coefficients_database = Backend::constant_load_coefficients_database;
+    constant_load_coefficients->load_coefficients_database = Backend::QueryByKey("Stalni teret");
     constant_load_table_.SetLoadCoefficients(constant_load_coefficients);
     constant_load_table_.SetSummaryResultVariable(Backend::constant_load_sum);
 
     auto* moving_load_coefficients = new Backend::LoadCoefficients();
-    moving_load_coefficients->load_coefficients_database = Backend::moving_load_coefficients_database;
+    moving_load_coefficients->load_coefficients_database = Backend::QueryByKey("Pokretni teret");
     moving_load_table_.SetLoadCoefficients(moving_load_coefficients);
     moving_load_table_.SetSummaryResultVariable(Backend::moving_load_sum);
 

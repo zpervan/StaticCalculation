@@ -4,6 +4,8 @@
 #include <map>
 #include <string>
 
+#include "Application/Backend/coefficient_parser.h"
+
 namespace Backend
 {
 
@@ -28,24 +30,29 @@ struct ReactionsTableParameters
 static float constant_load_sum{0.0f};
 static float moving_load_sum{0.0f};
 
-static std::map<std::string, float> constant_load_coefficients_database{{"Gotovi pod", 0.50f},
-                                                                        {"Termoizolacija", 1.32f},
-                                                                        {"Pregradni zidovi", 1.00f}};
+static Coefficients coefficient_databases;
 
-static std::map<std::string, float> moving_load_coefficients_database{{"Stambene prostorije", 2.00f},
-                                                                      {"Ravni krov", 1.00f}};
-
-template <typename T>
-T calculateLoad(T value)
+inline void PopulateCoefficientDatabase()
 {
-    return value;
+    spdlog::info("Populating coefficient database...");
+
+    coefficient_databases = CoefficientParser::Load();
 }
 
-template <typename T, typename... Rest>
-T calculateLoad(T value, Rest... rest)
+inline std::map<std::string, float> QueryByKey(const std::string& key)
 {
-    return value + calculateLoad(rest...);
+    assert(!coefficient_databases.empty());
+
+    std::map <std::string, float> queried_values;
+
+    for (const auto& element : coefficient_databases[key])
+    {
+        queried_values.emplace(element);
+    }
+
+    return queried_values;
 }
+
 }  // namespace Backend
 
 #endif  // STATICCALCULATION_FERT_BACKEND_H
