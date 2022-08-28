@@ -38,3 +38,8 @@ local_repository(
     name = "spdloglib",
     path = "ThirdParty/spdlog/",
 )
+
+local_repository(
+    name = "stblib",
+    path = "ThirdParty/stb/",
+)
