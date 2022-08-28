@@ -11,13 +11,19 @@ filegroup(
 )
 
 copy_directory(
+    name = "copy_coefficients",
+    src = "Coefficients",
+    out = "Coefficients",
+)
+
+copy_directory(
     name = "copy_fonts",
     src = "Fonts",
     out = "Fonts",
 )
 
 copy_directory(
-    name = "copy_coefficients",
-    src = "Coefficients",
-    out = "Coefficients",
+    name = "copy_images",
+    src = "Images",
+    out = "Images",
 )

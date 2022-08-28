@@ -6,6 +6,7 @@ cc_binary(
     data = [
         "//Application/Assets:copy_coefficients",
         "//Application/Assets:copy_fonts",
+        "//Application/Assets:copy_images",
     ],
     deps = [
         "//Application/GUI:gui",
