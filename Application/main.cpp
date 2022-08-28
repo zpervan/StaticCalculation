@@ -5,11 +5,11 @@
 #include <stdio.h>
 
 #include "Application/Core/configuration.h"
+#include "Application/Core/event_system.h"
 #include "Application/Core/paths.h"
 #include "Application/GUI/Components/coefficient_database.h"
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
-#include "Core/event_system.h"
 
 static void glfw_error_callback(int error, const char* description)
 {

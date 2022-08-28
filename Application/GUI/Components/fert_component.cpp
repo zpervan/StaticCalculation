@@ -14,7 +14,8 @@ Fert::Fert(EventSystem& event_system)
     : event_system_(event_system),
       constant_load_table_(CoefficientTable(event_system_)),
       moving_load_table_(CoefficientTable(event_system_)),
-      summary_table_(event_system_)
+      summary_table_(event_system_),
+      static_scheme_(event_system_)
 {
     Backend::PopulateCoefficientDatabase();
 
@@ -30,13 +31,14 @@ Fert::Fert(EventSystem& event_system)
 
     summary_table_.SetConstantLoadSum(Backend::constant_load_sum);
     summary_table_.SetMovingLoadSum(Backend::moving_load_sum);
+
+    static_scheme_.LoadImage(Paths::StaticSchemeImageFilePath());
 }
 
 void Fert::Show()
 {
     GUI::TextWithPadding("Staticka shema", true);
-    GUI::TextWithPadding("TODO: Dodaj sadrzaj");
-    /// @TODO: Add content
+    static_scheme_.Show();
 
     GUI::TextWithPadding("Analiza opterecenja", true);
 

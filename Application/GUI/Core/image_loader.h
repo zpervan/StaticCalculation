@@ -1,6 +1,8 @@
+#include <GLFW/glfw3.h>
+
+#ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 
-#include <GLFW/glfw3.h>
 #include <stb/stb_image.h>
 
 namespace GUI
@@ -45,3 +47,5 @@ inline bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* 
 }
 
 }  // namespace GUI
+
+#endif  // STATICCALCULATION_IMAGE_LOADER_H

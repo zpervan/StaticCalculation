@@ -20,5 +20,6 @@ cc_library(
         "//Application/Core:core",
         "@imguilib//:imgui",
         "@spdloglib//:spdlog",
+        "@stblib//:stb",
     ],
 )

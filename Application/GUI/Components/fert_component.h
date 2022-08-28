@@ -5,6 +5,7 @@
 #include "Application/GUI/Components/ibase_component.h"
 #include "Application/GUI/Elements/coefficient_table.h"
 #include "Application/GUI/Elements/reactions_table.h"
+#include "Application/GUI/Elements/image_area.h"
 
 namespace GUI
 {
@@ -19,6 +20,7 @@ class Fert : public IBaseComponent
     CoefficientTable constant_load_table_;
     CoefficientTable moving_load_table_;
     ReactionsTable summary_table_;
+    ImageArea static_scheme_;
 };
 
 }  // namespace GUI
