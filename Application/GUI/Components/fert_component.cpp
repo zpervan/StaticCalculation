@@ -37,6 +37,10 @@ Fert::Fert(EventSystem& event_system)
 
 void Fert::Show()
 {
+    /// @TODO: Make a element with text formatting options
+    static char text[1024 * 16] = "Unesite opisni tekst\n";
+    ImGui::InputTextMultiline( "##source", text, IM_ARRAYSIZE(text), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput);
+
     GUI::TextWithPadding("Staticka shema", true);
     static_scheme_.Show();
 
