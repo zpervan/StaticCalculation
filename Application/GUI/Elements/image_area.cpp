@@ -4,9 +4,12 @@
 
 #include "Application/GUI/Core/image_loader.h"
 
-GUI::ImageArea::ImageArea(EventSystem& event_system) : event_system_(event_system) {}
+namespace GUI
+{
 
-void GUI::ImageArea::LoadImage(const std::string& image_path)
+ImageArea::ImageArea(EventSystem& event_system) : event_system_(event_system) {}
+
+void ImageArea::LoadImageToBuffer(const std::string& image_path)
 {
     if (image_path_ != image_path)
     {
@@ -18,7 +21,7 @@ void GUI::ImageArea::LoadImage(const std::string& image_path)
     assert(is_image_loaded);
 }
 
-void GUI::ImageArea::Show()
+void ImageArea::Show()
 {
     if (!image_path_.empty())
     {
@@ -29,8 +32,10 @@ void GUI::ImageArea::Show()
         ImGui::Text("Dodaj shemu");
     }
 
-    if(ImGui::Button("Dodaj##ImageArea"))
+    if (ImGui::Button("Dodaj##ImageArea"))
     {
         /// @TODO: Add file explorer menu
     }
 }
+
+}  // namespace GUI

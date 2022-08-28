@@ -1,7 +1,7 @@
 #ifndef STATICCALCULATION_IMAGE_AREA_H
 #define STATICCALCULATION_IMAGE_AREA_H
 
-#include <GL/gl.h>
+#include <GLFW/glfw3.h>
 
 #include <string>
 
@@ -14,8 +14,8 @@ class ImageArea
 {
   public:
     ImageArea(EventSystem& event_system);
+    void LoadImageToBuffer(const std::string& image_path);
     void Show();
-    void LoadImage(const std::string& image_path);
 
   private:
     EventSystem& event_system_;

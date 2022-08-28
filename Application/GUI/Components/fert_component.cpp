@@ -32,7 +32,7 @@ Fert::Fert(EventSystem& event_system)
     summary_table_.SetConstantLoadSum(Backend::constant_load_sum);
     summary_table_.SetMovingLoadSum(Backend::moving_load_sum);
 
-    static_scheme_.LoadImage(Paths::StaticSchemeImageFilePath());
+    static_scheme_.LoadImageToBuffer(Paths::StaticSchemeImageFilePath());
 }
 
 void Fert::Show()

@@ -1,8 +1,11 @@
-#include <GLFW/glfw3.h>
-
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 
+#ifdef _WIN32
+#define GL_CLAMP_TO_EDGE 0x812F
+#endif
+
+#include <GLFW/glfw3.h>
 #include <stb/stb_image.h>
 
 namespace GUI
@@ -28,8 +31,7 @@ inline bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* 
     // Setup filtering parameters for display
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(
-        GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  // This is required on WebGL for non power-of-two textures
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  // This is required on WebGL for non power-of-two textures
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  // Same
 
     // Upload pixels into texture
