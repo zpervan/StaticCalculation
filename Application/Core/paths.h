@@ -18,10 +18,12 @@ namespace
 static constexpr auto Assets_Directory{"\\Application\\Assets"};
 static constexpr auto Arial_Font_File{"\\Fonts\\arial.ttf"};
 static constexpr auto Fert_Coefficients_File{"\\Coefficients\\fert_koeficijenti.json"};
+static constexpr auto Static_Scheme_Image_File{"\\Images\\staticka_shema.png"};
 #else
 static constexpr auto Assets_Directory{"/Application/Assets"};
 static constexpr auto Arial_Font_File{"/Fonts/arial.ttf"};
 static constexpr auto Fert_Coefficients_File{"/Coefficients/fert_koeficijenti.json"};
+static constexpr auto Static_Scheme_Image_File{"/Images/staticka_shema.png"};
 #endif
 }
 
@@ -55,6 +57,11 @@ inline std::string ArialFontPath()
 inline std::string FertCoefficientFilePath()
 {
     return RootPath().string() + Assets_Directory + Fert_Coefficients_File;
+}
+
+inline std::string StaticSchemeImageFilePath()
+{
+    return RootPath().string() + Assets_Directory + Static_Scheme_Image_File;
 }
 
 }  // namespace Paths
