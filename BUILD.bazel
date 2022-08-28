@@ -4,7 +4,8 @@ cc_binary(
     name = "main",
     srcs = ["Application/main.cpp"],
     data = [
-        "//Application/Assets:copy_assets",
+        "//Application/Assets:copy_coefficients",
+        "//Application/Assets:copy_fonts",
     ],
     deps = [
         "//Application/GUI:gui",
