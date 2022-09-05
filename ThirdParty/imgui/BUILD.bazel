@@ -14,6 +14,7 @@ cc_library(
         "backends/imgui_impl_opengl3*",
         "backends/imgui_impl_glut*",
         "backends/imgui_impl_glfw*",
+        "misc/freetype/imgui_freetype*",
         "*.cpp",
         "*.h",
     ]),
@@ -22,12 +23,14 @@ cc_library(
         "backends/imgui_impl_opengl3_loader.h",
         "backends/imgui_impl_glut.h",
         "backends/imgui_impl_glfw.h",
+        "misc/freetype/imgui_freetype.h",
     ] + glob(["*.h"]),
     includes = [
         "",
         "backends",
     ],
     deps = [
+        "@freetypelib//:freetype",
         "@gllib//:freeglut",
         "@gllib//:glfw",
     ],

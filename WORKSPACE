@@ -10,6 +10,11 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
 local_repository(
+    name = "freetypelib",
+    path = "ThirdParty/freetype/",
+)
+
+local_repository(
     name = "gllib",
     path = "ThirdParty/GL/",
 )
@@ -22,11 +27,6 @@ local_repository(
 local_repository(
     name = "imguilib",
     path = "ThirdParty/imgui/",
-)
-
-local_repository(
-    name = "sfmllib",
-    path = "ThirdParty/SFML/",
 )
 
 local_repository(
