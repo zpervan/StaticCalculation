@@ -4,6 +4,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Application/Core/configuration.h"
+#include "Application/GUI/Core/id.h"
 
 namespace
 {
@@ -17,7 +18,16 @@ ImGuiWindowFlags main_window_flags{ImGuiWindowFlags_NoCollapse |
 namespace GUI
 {
 
-MainWindow::MainWindow(EventSystem& event_system) : event_system_(event_system), fert_(event_system_) {}
+MainWindow::MainWindow(EventSystem& event_system) : event_system_(event_system){}
+
+MainWindow::~MainWindow()
+{
+    for (auto component : components_)
+    {
+        delete component.second;
+        component.second = nullptr;
+    }
+}
 
 void MainWindow::Show()
 {
@@ -28,15 +38,18 @@ void MainWindow::Show()
 
     ImGui::BeginTabBar("##MainWindowTabBar");
 
-    if (ImGui::BeginTabItem("FERT", nullptr, ImGuiTabItemFlags_None))
+    for(auto & component : components_)
     {
-        fert_.Show();
-        ImGui::EndTabItem();
+        if (ImGui::BeginTabItem(component.first.c_str(), nullptr, ImGuiTabItemFlags_None))
+        {
+            component.second->Show();
+            ImGui::EndTabItem();
+        }
     }
 
     if (ImGui::TabItemButton("+"))
     {
-        spdlog::info("TODO: Implement adding new tabs");
+        components_.emplace_back(std::make_pair(Id::GenerateIdWithLabel("FERT"), new GUI::Fert(event_system_)));
     }
 
     ImGui::EndTabBar();

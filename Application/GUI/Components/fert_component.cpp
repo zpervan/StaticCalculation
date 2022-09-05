@@ -17,6 +17,7 @@ Fert::Fert(EventSystem& event_system)
       summary_table_(event_system_),
       static_scheme_(event_system_)
 {
+    /// @TODO: Extract from component creation. While adding new components, those steps are redundant
     Backend::PopulateCoefficientDatabase();
 
     auto* constant_load_coefficients = new Backend::LoadCoefficients();
