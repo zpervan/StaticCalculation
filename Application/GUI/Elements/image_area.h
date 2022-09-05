@@ -2,6 +2,8 @@
 #define STATICCALCULATION_IMAGE_AREA_H
 
 #include <GLFW/glfw3.h>
+#include <imgui.h>
+#include <imgui_filebrowser.h>
 
 #include <string>
 
@@ -20,6 +22,7 @@ class ImageArea
   private:
     EventSystem& event_system_;
     std::string image_path_;
+    ImGui::FileBrowser image_file_browser_;
 
     int width_{0};
     int height_{0};
