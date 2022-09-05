@@ -7,8 +7,11 @@
 
 namespace
 {
-ImGuiWindowFlags main_window_flags{ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration |
-                              ImGuiWindowFlags_NoBringToFrontOnFocus};
+ImGuiWindowFlags main_window_flags{ImGuiWindowFlags_NoCollapse |
+                                   ImGuiWindowFlags_NoMove |
+                                   ImGuiWindowFlags_NoDecoration |
+                                   ImGuiWindowFlags_NoBringToFrontOnFocus |
+                                   ImGuiWindowFlags_AlwaysVerticalScrollbar};
 }  // namespace
 
 namespace GUI
