@@ -10,10 +10,10 @@ static std::size_t id{0};
 class Id
 {
   public:
-    static std::size_t GenerateId()
+    static std::string GenerateId()
     {
         id += 1;
-        return id;
+        return fmt::format("##{}", std::to_string(id));
     };
 
     static std::string GenerateIdWithLabel(const std::string& label)
