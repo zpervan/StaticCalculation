@@ -10,6 +10,7 @@
 #include "Application/GUI/Components/coefficient_database.h"
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
+#include "Application/GUI/Elements/info_popup_window.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -65,8 +66,9 @@ int main(int, char**)
 
     // Custom GUI components
     GUI::CoefficientDatabase coefficient_database{event_system};
-    GUI::MenuBar menu_bar{event_system};
+    GUI::InfoPopupWindow about_popup_window_{event_system};
     GUI::MainWindow main_window{event_system};
+    GUI::MenuBar menu_bar{event_system};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !isDone)
@@ -92,6 +94,11 @@ int main(int, char**)
             if (event_system.Poll() == Events::CoefficientDatabase_OpenWindow)
             {
                 coefficient_database.Show();
+            }
+
+            if (event_system.Poll() == Events::About_OpenWindow)
+            {
+                about_popup_window_.Show("Unesi nesto o aplikaciji");
             }
         }
 

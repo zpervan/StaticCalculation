@@ -19,7 +19,7 @@ class Id
     static std::string GenerateIdWithLabel(const std::string& label)
     {
         std::string id_with_label;
-        return fmt::format("{}##{}", label, GenerateId());
+        return fmt::format("{}{}", label, GenerateId());
     }
 };
 

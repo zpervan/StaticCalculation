@@ -50,8 +50,10 @@ void MenuBar::Show()
 
         if (ImGui::BeginMenu("Pomoc"))
         {
-            ImGui::MenuItem("Upute koristenja", nullptr);
-            ImGui::MenuItem("O aplikaciji", nullptr);
+            if(ImGui::MenuItem("O aplikaciji", nullptr))
+            {
+                event_system_.Set(Events::About_OpenWindow);
+            }
 
             ImGui::EndMenu();
         }
