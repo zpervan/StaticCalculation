@@ -2,6 +2,7 @@
 #define STATICCALCULATION_COEFFICIENT_DATABASE_H
 
 #include "Application/Core/event_system.h"
+#include "Application/GUI/Elements/button.h"
 
 namespace GUI
 {
@@ -14,6 +15,9 @@ class CoefficientDatabase
 
   private:
     EventSystem& event_system_;
+    ImVec2 size_;
+    Button save_button_;
+    Button close_button_;
     bool is_open_{false};
 };
 
