@@ -3,19 +3,23 @@
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
+#include "Application/Backend/coefficient_parser.h"
 #include "Application/GUI/Core/id.h"
 
 namespace
 {
 ImGuiWindowFlags flags{ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |
                        ImGuiWindowFlags_Modal};
-}
+
+std::string table_id{Id::GenerateId()};
+}  // namespace
 
 namespace GUI
 {
 
-CoefficientDatabase::CoefficientDatabase(EventSystem& event_system)
+CoefficientDatabase::CoefficientDatabase(EventSystem& event_system, Backend::CoefficientService& coefficient_service)
     : event_system_(event_system),
+      coefficient_service_(coefficient_service),
       size_(400.0f, 400.0f),
       save_button_(Button(event_system_)),
       close_button_(Button(event_system_))

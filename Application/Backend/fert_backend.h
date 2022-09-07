@@ -30,29 +30,6 @@ struct ReactionsTableParameters
 static float constant_load_sum{0.0f};
 static float moving_load_sum{0.0f};
 
-static Coefficients coefficient_databases;
-
-inline void PopulateCoefficientDatabase()
-{
-    spdlog::info("Populating coefficient database...");
-
-    coefficient_databases = CoefficientParser::Load();
-}
-
-inline std::map<std::string, float> QueryByKey(const std::string& key)
-{
-    assert(!coefficient_databases.empty());
-
-    std::map <std::string, float> queried_values;
-
-    for (const auto& element : coefficient_databases[key])
-    {
-        queried_values.emplace(element);
-    }
-
-    return queried_values;
-}
-
 }  // namespace Backend
 
 #endif  // STATICCALCULATION_FERT_BACKEND_H

@@ -20,7 +20,7 @@ inline void Save(const std::map<std::string, float>& coefficients_to_save)
     /// @TODO: Implement saving to JSON functionality
 }
 
-inline Coefficients Load()
+inline Coefficients* Load()
 {
     spdlog::info("Parsing JSON file: {}", Paths::FertCoefficientFilePath());
     std::ifstream input_file{Paths::FertCoefficientFilePath()};
@@ -28,7 +28,7 @@ inline Coefficients Load()
     nlohmann::json parsed_json;
     input_file >> parsed_json;
 
-    Coefficients coefficients{};
+    auto* coefficients{new Coefficients};
 
     for (auto group = parsed_json.begin(); group != parsed_json.end(); ++group)
     {
@@ -36,7 +36,7 @@ inline Coefficients Load()
 
         for (auto coefficient = group->begin(); coefficient != group->end(); ++coefficient)
         {
-            coefficients[processed_group_key].emplace(std::make_pair(Util::ProcessString(coefficient.key()), coefficient.value()));
+            (*coefficients)[processed_group_key].emplace(std::make_pair(Util::ProcessString(coefficient.key()), coefficient.value()));
         }
     }
 

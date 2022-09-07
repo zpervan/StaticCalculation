@@ -8,17 +8,18 @@
 
 namespace
 {
-ImGuiWindowFlags main_window_flags{ImGuiWindowFlags_NoCollapse |
-                                   ImGuiWindowFlags_NoMove |
-                                   ImGuiWindowFlags_NoDecoration |
-                                   ImGuiWindowFlags_NoBringToFrontOnFocus |
+ImGuiWindowFlags main_window_flags{ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove |
+                                   ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBringToFrontOnFocus |
                                    ImGuiWindowFlags_AlwaysVerticalScrollbar};
 }  // namespace
 
 namespace GUI
 {
 
-MainWindow::MainWindow(EventSystem& event_system) : event_system_(event_system){}
+MainWindow::MainWindow(EventSystem& event_system, Backend::CoefficientService& coefficient_service)
+    : event_system_(event_system), coefficient_service_(coefficient_service)
+{
+}
 
 MainWindow::~MainWindow()
 {
@@ -38,7 +39,7 @@ void MainWindow::Show()
 
     ImGui::BeginTabBar("##MainWindowTabBar");
 
-    for(auto & component : components_)
+    for (auto& component : components_)
     {
         if (ImGui::BeginTabItem(component.first.c_str(), nullptr, ImGuiTabItemFlags_None))
         {
@@ -49,7 +50,8 @@ void MainWindow::Show()
 
     if (ImGui::TabItemButton("+"))
     {
-        components_.emplace_back(std::make_pair(Id::GenerateIdWithLabel("FERT"), new GUI::Fert(event_system_)));
+        components_.emplace_back(
+            std::make_pair(Id::GenerateIdWithLabel("FERT"), new GUI::Fert(event_system_, coefficient_service_)));
     }
 
     ImGui::EndTabBar();

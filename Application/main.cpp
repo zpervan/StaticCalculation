@@ -4,6 +4,7 @@
 #include <imgui_impl_opengl3.h>
 #include <stdio.h>
 
+#include "Application/Backend/coefficient_service.h"
 #include "Application/Core/configuration.h"
 #include "Application/Core/event_system.h"
 #include "Application/Core/paths.h"
@@ -62,23 +63,24 @@ int main(int, char**)
 
     // Core functionalities
     EventSystem event_system{};
-    bool isDone{false};
+    Backend::CoefficientService coefficient_service{};
+    bool is_done{false};
 
     // Custom GUI components
-    GUI::CoefficientDatabase coefficient_database{event_system};
+    GUI::CoefficientDatabase coefficient_database{event_system, coefficient_service};
     GUI::InfoPopupWindow about_popup_window_{event_system};
-    GUI::MainWindow main_window{event_system};
+    GUI::MainWindow main_window{event_system, coefficient_service};
     GUI::MenuBar menu_bar{event_system};
 
     // Main loop
-    while (!glfwWindowShouldClose(window) && !isDone)
+    while (!glfwWindowShouldClose(window) && !is_done)
     {
         glfwPollEvents();
 
         /// @TODO: Create a window class and hide the boilerplate code
         if (event_system.Poll() == Events::Exit)
         {
-            isDone = true;
+            is_done = true;
         }
 
         // Start the Dear ImGui frame

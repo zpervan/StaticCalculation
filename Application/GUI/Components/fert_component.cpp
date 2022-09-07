@@ -10,23 +10,21 @@
 namespace GUI
 {
 
-Fert::Fert(EventSystem& event_system)
+Fert::Fert(EventSystem& event_system, Backend::CoefficientService& coefficient_service)
     : event_system_(event_system),
+      coefficient_service_(coefficient_service),
       constant_load_table_(CoefficientTable(event_system_)),
       moving_load_table_(CoefficientTable(event_system_)),
       summary_table_(event_system_),
       static_scheme_(event_system_)
 {
-    /// @TODO: Extract from component creation. While adding new components, those steps are redundant
-    Backend::PopulateCoefficientDatabase();
-
     auto* constant_load_coefficients = new Backend::LoadCoefficients();
-    constant_load_coefficients->load_coefficients_database = Backend::QueryByKey("Stalni teret");
+    constant_load_coefficients->load_coefficients_database = coefficient_service_.QueryByKey("Stalni teret");
     constant_load_table_.SetLoadCoefficients(constant_load_coefficients);
     constant_load_table_.SetSummaryResultVariable(Backend::constant_load_sum);
 
     auto* moving_load_coefficients = new Backend::LoadCoefficients();
-    moving_load_coefficients->load_coefficients_database = Backend::QueryByKey("Pokretni teret");
+    moving_load_coefficients->load_coefficients_database = coefficient_service_.QueryByKey("Pokretni teret");
     moving_load_table_.SetLoadCoefficients(moving_load_coefficients);
     moving_load_table_.SetSummaryResultVariable(Backend::moving_load_sum);
 
