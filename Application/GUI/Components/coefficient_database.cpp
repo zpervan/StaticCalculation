@@ -21,6 +21,7 @@ CoefficientDatabase::CoefficientDatabase(EventSystem& event_system, Backend::Coe
     : event_system_(event_system),
       coefficient_service_(coefficient_service),
       size_(400.0f, 400.0f),
+      coefficient_group_combo_box_(event_system_),
       save_button_(Button(event_system_)),
       close_button_(Button(event_system_))
 {
@@ -39,9 +40,10 @@ void CoefficientDatabase::Show()
     ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
     ImGui::SetNextWindowSize(size_);
 
-    if (ImGui::Begin("##CoefficientDatabaseWindow", NULL, flags))
+    if (ImGui::Begin("Baza koeficijenata", NULL, flags))
     {
-        ImGui::Text("Dodaj bazu koeficijenata");
+
+        coefficient_group_combo_box_.Show(*coefficient_service_.GetCoefficientsDatabase(), selected_coefficient_group_);
 
         if (save_button_.Show())
         {

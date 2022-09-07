@@ -17,6 +17,7 @@ class ComboBox
   public:
     ComboBox(EventSystem& event_system);
     void Show(const std::map<std::string, float>& values, std::pair<std::string, float>& selected_value);
+    void Show(const std::map<std::string, std::map<std::string, float>>& values, std::string& selected_value);
 
   private:
     EventSystem& event_system_;

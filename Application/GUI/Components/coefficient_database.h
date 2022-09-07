@@ -4,6 +4,7 @@
 #include "Application/Backend/coefficient_service.h"
 #include "Application/Core/event_system.h"
 #include "Application/GUI/Elements/button.h"
+#include "Application/GUI/Elements/combo_box.h"
 
 namespace GUI
 {
@@ -19,9 +20,11 @@ class CoefficientDatabase
     Backend::CoefficientService& coefficient_service_;
 
     ImVec2 size_;
+    ComboBox coefficient_group_combo_box_;
     Button save_button_;
     Button close_button_;
     bool is_open_{false};
+    std::string selected_coefficient_group_;
 };
 
 }  // namespace GUI
