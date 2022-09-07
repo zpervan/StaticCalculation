@@ -17,7 +17,7 @@ void GUI::Button::HorizontalAlignment(ButtonHorizontalAlignment button_horizonta
 
     if (ButtonHorizontalAlignment::Left == button_horizontal_alignment)
     {
-        x_position_ = (parent_window_size.x - size_.x) * (1.0f / 8.0f);
+        x_position_ = (parent_window_size.x - size_.x) * (0.5f / 8.0f);
     }
 
     if (ButtonHorizontalAlignment::Center == button_horizontal_alignment)
@@ -27,7 +27,7 @@ void GUI::Button::HorizontalAlignment(ButtonHorizontalAlignment button_horizonta
 
     if (ButtonHorizontalAlignment::Right == button_horizontal_alignment)
     {
-        x_position_ = (parent_window_size.x - size_.x) * (7.0f / 8.0f);
+        x_position_ = (parent_window_size.x - size_.x) * (7.5f / 8.0f);
     }
 }
 
@@ -47,7 +47,7 @@ void GUI::Button::VerticalAlignment(ButtonVerticalAlignment button_vertical_alig
 
     if (ButtonVerticalAlignment::Down == button_vertical_alignment)
     {
-        y_position_ = (parent_window_size.y - size_.y) * (7.0f / 8.0f);
+        y_position_ = (parent_window_size.y - size_.y) * (7.5f / 8.0f);
     }
 }
 
