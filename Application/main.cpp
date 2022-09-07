@@ -9,6 +9,7 @@
 #include "Application/Core/event_system.h"
 #include "Application/Core/paths.h"
 #include "Application/GUI/Components/coefficient_database.h"
+#include "Application/GUI/Components/new_component_popup.h"
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
 #include "Application/GUI/Elements/info_popup_window.h"
@@ -71,6 +72,7 @@ int main(int, char**)
     GUI::InfoPopupWindow about_popup_window_{event_system};
     GUI::MainWindow main_window{event_system, coefficient_service};
     GUI::MenuBar menu_bar{event_system};
+    GUI::NewComponentPopup new_component_popup{event_system};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !is_done)
@@ -101,6 +103,11 @@ int main(int, char**)
             if (event_system.Poll() == Events::About_OpenWindow)
             {
                 about_popup_window_.Show("Unesi nesto o aplikaciji");
+            }
+
+            if (event_system.Poll() == Events::NewComponent_OpenWindow)
+            {
+                new_component_popup.Show();
             }
         }
 
