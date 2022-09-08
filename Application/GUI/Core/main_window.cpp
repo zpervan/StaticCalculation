@@ -51,8 +51,6 @@ void MainWindow::Show()
     if (ImGui::TabItemButton("+"))
     {
         event_system_.Set(Events::NewComponent_OpenWindow);
-//        components_.emplace_back(
-//            std::make_pair(Id::GenerateIdWithLabel("FERT"), new GUI::Fert(event_system_, coefficient_service_)));
     }
 
     ImGui::EndTabBar();

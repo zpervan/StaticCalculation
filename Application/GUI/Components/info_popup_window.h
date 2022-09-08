@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Application/Core/event_system.h"
-#include "Application/GUI/Elements/button.h"
+#include "Application/GUI/Components/button.h"
 
 namespace GUI
 {

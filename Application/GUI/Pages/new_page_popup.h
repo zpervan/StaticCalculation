@@ -1,19 +1,19 @@
-#ifndef STATICCALCULATION_NEW_COMPONENT_POPUP_H
-#define STATICCALCULATION_NEW_COMPONENT_POPUP_H
+#ifndef STATICCALCULATION_NEW_PAGE_POPUP_H
+#define STATICCALCULATION_NEW_PAGE_POPUP_H
 
 #include <imgui.h>
 
 #include "Application/Core/event_system.h"
-#include "Application/GUI/Elements/button.h"
-#include "Application/GUI/Elements/combo_box.h"
+#include "Application/GUI/Components/button.h"
+#include "Application/GUI/Components/combo_box.h"
 
 namespace GUI
 {
 
-class NewComponentPopup
+class NewPagePopup
 {
   public:
-    NewComponentPopup(EventSystem& event_system);
+    NewPagePopup(EventSystem& event_system);
     void Show();
 
   private:
@@ -29,4 +29,4 @@ class NewComponentPopup
 
 }  // namespace GUI
 
-#endif  // STATICCALCULATION_NEW_COMPONENT_POPUP_H
+#endif  // STATICCALCULATION_NEW_PAGE_POPUP_H

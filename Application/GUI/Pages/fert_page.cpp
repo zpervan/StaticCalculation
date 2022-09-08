@@ -1,16 +1,16 @@
-#include "fert_component.h"
+#include "fert_page.h"
 
 #include <imgui.h>
 
 #include "Application/Backend/fert_backend.h"
-#include "Application/GUI/Elements/combo_box.h"
-#include "Application/GUI/Elements/input_fields.h"
-#include "Application/GUI/Elements/text_with_padding.h"
+#include "Application/GUI/Components/combo_box.h"
+#include "Application/GUI/Components/input_fields.h"
+#include "Application/GUI/Components/text_with_padding.h"
 
 namespace GUI
 {
 
-Fert::Fert(EventSystem& event_system, Backend::CoefficientService& coefficient_service)
+FertPage::FertPage(EventSystem& event_system, Backend::CoefficientService& coefficient_service)
     : event_system_(event_system),
       coefficient_service_(coefficient_service),
       constant_load_table_(CoefficientTable(event_system_)),
@@ -34,7 +34,7 @@ Fert::Fert(EventSystem& event_system, Backend::CoefficientService& coefficient_s
     static_scheme_.LoadImageToBuffer(Paths::StaticSchemeImageFilePath());
 }
 
-void Fert::Show()
+void FertPage::Show()
 {
     /// @TODO: Make a element with text formatting options
     static char text[1024 * 16] = "Unesite opisni tekst\n";

@@ -5,14 +5,12 @@ cc_library(
     srcs = glob([
         "Components/*",
         "Core/*",
-        "Elements/*",
-        "*.cpp",
+        "Pages/*",
     ]),
     hdrs = glob([
         "Components/*.h",
         "Core/*.h",
-        "Elements/*.h",
-        "*.h",
+        "Pages/*",
     ]),
     visibility = ["//visibility:public"],
     deps = [

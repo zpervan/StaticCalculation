@@ -1,8 +1,8 @@
-#include "new_component_popup.h"
+#include "new_page_popup.h"
 
 #include <spdlog/spdlog.h>
 
-#include "Application/GUI/Elements/input_fields.h"
+#include "Application/GUI/Components/input_fields.h"
 
 namespace
 {
@@ -19,7 +19,7 @@ static ImU64 position_number{100};
 namespace GUI
 {
 
-NewComponentPopup::NewComponentPopup(EventSystem& event_system)
+NewPagePopup::NewPagePopup(EventSystem& event_system)
     : event_system_(event_system),
       size_(280.0f, 250.0f),
       new_component_tab_list_(ComboBox(event_system_)),
@@ -35,7 +35,7 @@ NewComponentPopup::NewComponentPopup(EventSystem& event_system)
     cancel_button_.VerticalAlignment(ButtonVerticalAlignment::Down, size_);
 }
 
-void NewComponentPopup::Show()
+void NewPagePopup::Show()
 {
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));

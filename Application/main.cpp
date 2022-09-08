@@ -8,11 +8,11 @@
 #include "Application/Core/configuration.h"
 #include "Application/Core/event_system.h"
 #include "Application/Core/paths.h"
-#include "Application/GUI/Components/coefficient_database.h"
-#include "Application/GUI/Components/new_component_popup.h"
+#include "Application/GUI/Components/info_popup_window.h"
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
-#include "Application/GUI/Elements/info_popup_window.h"
+#include "Application/GUI/Pages/coefficient_database.h"
+#include "Application/GUI/Pages/new_page_popup.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -72,7 +72,7 @@ int main(int, char**)
     GUI::InfoPopupWindow about_popup_window_{event_system};
     GUI::MainWindow main_window{event_system, coefficient_service};
     GUI::MenuBar menu_bar{event_system};
-    GUI::NewComponentPopup new_component_popup{event_system};
+    GUI::NewPagePopup new_component_popup{event_system};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !is_done)

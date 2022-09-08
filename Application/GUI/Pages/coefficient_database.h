@@ -3,8 +3,8 @@
 
 #include "Application/Backend/coefficient_service.h"
 #include "Application/Core/event_system.h"
-#include "Application/GUI/Elements/button.h"
-#include "Application/GUI/Elements/combo_box.h"
+#include "Application/GUI/Components/button.h"
+#include "Application/GUI/Components/combo_box.h"
 
 namespace GUI
 {
