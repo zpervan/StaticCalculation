@@ -16,14 +16,19 @@ ImGuiWindowFlags main_window_flags{ImGuiWindowFlags_NoCollapse | ImGuiWindowFlag
 namespace GUI
 {
 
-MainWindow::MainWindow(EventSystem& event_system, Backend::CoefficientService& coefficient_service)
-    : event_system_(event_system), coefficient_service_(coefficient_service)
+MainWindow::MainWindow(EventSystem& event_system,
+                       Backend::PageService& page_service,
+                       Backend::CoefficientService& coefficient_service)
+    : event_system_(event_system),
+      page_service_(page_service),
+      coefficient_service_(coefficient_service),
+      page_factory_(PageFactory(event_system_, page_service_, coefficient_service_))
 {
 }
 
 MainWindow::~MainWindow()
 {
-    for (auto component : components_)
+    for (auto component : pages_)
     {
         delete component.second;
         component.second = nullptr;
@@ -33,13 +38,30 @@ MainWindow::~MainWindow()
 void MainWindow::Show()
 {
     ImGui::SetNextWindowPos({0.0f, Configuration::MENU_BAR_HEIGHT});
-    ImGui::SetNextWindowSize({Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT - Configuration::MENU_BAR_HEIGHT});
+
+    const float window_height{Configuration::WINDOW_HEIGHT - Configuration::MENU_BAR_HEIGHT};
+    ImGui::SetNextWindowSize({Configuration::WINDOW_WIDTH, window_height});
 
     ImGui::Begin("##MainWindow", nullptr, main_window_flags);
 
     ImGui::BeginTabBar("##MainWindowTabBar");
 
-    for (auto& component : components_)
+    if (event_system_.Poll() == Events::CreateNewPage)
+    {
+        const auto page_title{page_service_.GetPages().back().first};
+        const auto page_type{page_service_.GetPages().back().second};
+
+        auto new_page{std::make_pair(page_title, page_factory_.CreatePage(page_type))};
+
+        if (new_page.second != nullptr)
+        {
+            pages_.emplace_back(page_title, page_factory_.CreatePage(page_type));
+        }
+
+        event_system_.Set(Events::None);
+    }
+
+    for (auto& component : pages_)
     {
         if (ImGui::BeginTabItem(component.first.c_str(), nullptr, ImGuiTabItemFlags_None))
         {

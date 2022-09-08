@@ -19,10 +19,11 @@ static ImU64 position_number{100};
 namespace GUI
 {
 
-NewPagePopup::NewPagePopup(EventSystem& event_system)
+NewPagePopup::NewPagePopup(EventSystem& event_system, Backend::PageService& page_service)
     : event_system_(event_system),
+      page_service_(page_service),
       size_(280.0f, 250.0f),
-      new_component_tab_list_(ComboBox(event_system_)),
+      new_page_tab_list_(ComboBox(event_system_)),
       confirm_button_(Button(event_system_)),
       cancel_button_(Button(event_system_))
 {
@@ -44,7 +45,7 @@ void NewPagePopup::Show()
     if (ImGui::Begin("Napravi novu komponentu", nullptr, flags))
     {
         ImGui::Text("Vrsta komponente:");
-        new_component_tab_list_.Show(component_tabs, selected_component_);
+        new_page_tab_list_.Show(component_tabs, selected_page_);
 
         ImGui::Text("Opis:");
         ImGui::SetNextItemWidth(size_.x * 0.95f);
@@ -58,8 +59,8 @@ void NewPagePopup::Show()
         /// @TODO: Check if fields are non-empty
         if (confirm_button_.Show())
         {
-            std::string tab_name{description_text + std::string("-") + std::to_string(position_number)};
-            spdlog::info("Creating tab component: {}", selected_component_ + "-" + tab_name);
+            const auto page_name{selected_page_ + " - " + description_text + std::string(" - ") + std::to_string(position_number)};
+            page_service_.Add(page_name, page_service_.ConvertPageType(selected_page_));
         }
 
         if (cancel_button_.Show())

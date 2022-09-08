@@ -17,6 +17,7 @@ static std::map<Events, std::string> mapped_map_editor_events{
     {Events::Loading, "Loading"},
     {Events::LoadingConfirmed, "LoadingConfirmed"},
     {Events::Exit, "Exit"},
+    {Events::CreateNewPage, "CreateNewPage"},
     {Events::CoefficientDatabase_OpenWindow, "CoefficientDatabase_OpenWindow"},
     {Events::About_OpenWindow, "About_OpenWindow"}
 };

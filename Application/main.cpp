@@ -64,15 +64,16 @@ int main(int, char**)
 
     // Core functionalities
     EventSystem event_system{};
+    Backend::PageService page_service{event_system};
     Backend::CoefficientService coefficient_service{};
     bool is_done{false};
 
     // Custom GUI components
     GUI::CoefficientDatabase coefficient_database{event_system, coefficient_service};
     GUI::InfoPopupWindow about_popup_window_{event_system};
-    GUI::MainWindow main_window{event_system, coefficient_service};
+    GUI::MainWindow main_window{event_system, page_service, coefficient_service};
     GUI::MenuBar menu_bar{event_system};
-    GUI::NewPagePopup new_component_popup{event_system};
+    GUI::NewPagePopup new_component_popup{event_system, page_service};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !is_done)

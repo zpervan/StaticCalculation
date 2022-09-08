@@ -12,6 +12,7 @@ enum class Events
     Loading,
     LoadingConfirmed,
     Exit,
+    CreateNewPage,
     CoefficientDatabase_OpenWindow,
     About_OpenWindow,
     NewComponent_OpenWindow
