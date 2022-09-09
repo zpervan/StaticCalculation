@@ -8,11 +8,11 @@
 #include "Application/Core/configuration.h"
 #include "Application/Core/event_system.h"
 #include "Application/Core/paths.h"
-#include "Application/GUI/Components/info_popup_window.h"
 #include "Application/GUI/Core/main_window.h"
 #include "Application/GUI/Core/menu_bar.h"
-#include "Application/GUI/Pages/coefficient_database.h"
-#include "Application/GUI/Pages/new_page_popup.h"
+#include "Application/GUI/Popups/coefficient_database.h"
+#include "Application/GUI/Popups/info_popup_window.h"
+#include "Application/GUI/Popups/new_page_popup.h"
 
 static void glfw_error_callback(int error, const char* description)
 {

@@ -6,11 +6,13 @@ cc_library(
         "Components/*",
         "Core/*",
         "Pages/*",
+        "Popups/*",
     ]),
     hdrs = glob([
         "Components/*.h",
         "Core/*.h",
         "Pages/*",
+        "Popups/*",
     ]),
     visibility = ["//visibility:public"],
     deps = [

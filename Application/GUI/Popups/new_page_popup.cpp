@@ -1,4 +1,4 @@
-#include "new_page_popup.h"
+#include "Application/GUI/Popups/new_page_popup.h"
 
 #include <spdlog/spdlog.h>
 
