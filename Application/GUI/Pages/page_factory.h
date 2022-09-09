@@ -6,7 +6,6 @@
 #include "Application/Backend/coefficient_service.h"
 #include "Application/Backend/page_service.h"
 #include "Application/Core/event_system.h"
-#include "Application/GUI/Pages/fert_page.h"
 #include "Application/GUI/Pages/ibase_page.h"
 
 namespace GUI

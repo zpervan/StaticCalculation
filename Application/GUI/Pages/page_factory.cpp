@@ -1,5 +1,8 @@
 #include "page_factory.h"
 
+#include "Application/GUI/Pages/dummy_page.h"
+#include "Application/GUI/Pages/fert_page.h"
+
 GUI::PageFactory::PageFactory(EventSystem& event_system,
                               Backend::PageService& page_service,
                               Backend::CoefficientService& coefficient_service)
@@ -17,6 +20,8 @@ GUI::IBasePage* GUI::PageFactory::CreatePage(Backend::PageType page_type)
         /// @TODO: Implement other pages once created
         case Backend::PageType::Podroznica:
         case Backend::PageType::Stup:
+            return new DummyPage();
+
         default:
             return nullptr;
     }
