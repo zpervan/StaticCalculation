@@ -26,7 +26,7 @@ jobs:
           bazel build //:StatikaTorzo --config=windows-ci -c opt
 
       - name: Create Artifacts
-        run: .\Scripts\create_release_package_windows.ps1 -create_zip_package $False
+        run: .\Scripts\create_release_package_windows.ps1 -create_zip_package $False -create_installer $False
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3

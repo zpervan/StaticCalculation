@@ -1,5 +1,6 @@
 param (
-[bool]$create_zip_package = $True
+    [bool]$create_zip_package = $True,
+    [bool]$create_installer = $False    
 ) 
 
 echo "##### Creating Windows release package #####"
@@ -38,4 +39,10 @@ if($create_zip_package -eq $True)
 
     echo "Cleaning up..."
     Remove-Item -Path $root_application_release -Recurse -Force
+}
+
+if($create_installer -eq $True)
+{
+    echo "Creating installer"
+    makensis $root_directory\Scripts\create_installer.nsi
 }
