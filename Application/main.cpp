@@ -21,6 +21,11 @@ static void glfw_error_callback(int error, const char* description)
 
 int main(int, char**)
 {
+// Use debug messages in non-optimizes (debug) mode
+#ifndef __OPTIMIZE__
+    spdlog::set_level(spdlog::level::debug);
+#endif
+
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit()) return 1;

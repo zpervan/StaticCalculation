@@ -32,6 +32,10 @@ CoefficientDatabase::CoefficientDatabase(EventSystem& event_system, Backend::Coe
     close_button_.SetText("Zatvori");
     close_button_.HorizontalAlignment(ButtonHorizontalAlignment::Right, size_);
     close_button_.VerticalAlignment(ButtonVerticalAlignment::Down, size_);
+
+    previously_selected_coefficient_group_ = coefficient_service_.GetCoefficientsDatabase()->begin()->first;
+    selected_database_ = &coefficient_service_.GetCoefficientsDatabase()->begin()->second;
+    row_to_remove_ = selected_database_->end();
 }
 
 void CoefficientDatabase::Show()
@@ -42,8 +46,23 @@ void CoefficientDatabase::Show()
 
     if (ImGui::Begin("Baza koeficijenata", NULL, flags))
     {
-
         coefficient_group_combo_box_.Show(*coefficient_service_.GetCoefficientsDatabase(), selected_coefficient_group_);
+        selected_database_ = &(*coefficient_service_.GetCoefficientsDatabase())[selected_coefficient_group_];
+
+        // In order to properly delete database entries, change also the database map iterator - otherwise it crashes.
+        if (selected_coefficient_group_ != previously_selected_coefficient_group_)
+        {
+            spdlog::debug("Changing currently selected coefficient group");
+            row_to_remove_ = selected_database_->end();
+            previously_selected_coefficient_group_ = selected_coefficient_group_;
+        }
+
+        if (row_to_remove_ != selected_database_->end())
+        {
+            spdlog::info("Removing coefficient database entry on position {}", row_to_remove_->first);
+            selected_database_->erase(row_to_remove_);
+            row_to_remove_ = selected_database_->end();
+        }
 
         if (ImGui::BeginTable(table_id.c_str(), 3, ImGuiTableFlags_Borders))
         {
@@ -54,9 +73,7 @@ void CoefficientDatabase::Show()
 
             std::size_t component_id{0};
 
-            auto* selected_database{&(*coefficient_service_.GetCoefficientsDatabase())[selected_coefficient_group_]};
-
-            for (auto it = selected_database->begin(); it != selected_database->end(); ++it)
+            for (auto it = selected_database_->begin(); it != selected_database_->end(); ++it)
             {
                 ImGui::TableNextRow();
 
@@ -70,8 +87,7 @@ void CoefficientDatabase::Show()
                 std::string delete_label_id{fmt::format("X##{}", component_id)};
                 if (ImGui::Button(delete_label_id.c_str(), {20.0f, 0.0f}))
                 {
-                    /// @TODO: Implement deleting rows and reflect it in coefficient JSON file
-                    // row_to_remove_ = it;
+                    row_to_remove_ = it;
                 };
 
                 ++component_id;
