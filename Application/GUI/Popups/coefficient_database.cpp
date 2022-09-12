@@ -8,8 +8,11 @@
 
 namespace
 {
-ImGuiWindowFlags flags{ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |
-                       ImGuiWindowFlags_Modal};
+ImGuiWindowFlags window_flags{ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |
+                              ImGuiWindowFlags_Modal};
+
+ImGuiTableFlags table_flags{ImGuiTableFlags_Borders | ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_RowBg |
+                            ImGuiTableFlags_NoHostExtendX};
 
 std::string table_id{Id::GenerateId()};
 }  // namespace
@@ -23,7 +26,8 @@ CoefficientDatabase::CoefficientDatabase(EventSystem& event_system, Backend::Coe
       size_(400.0f, 400.0f),
       coefficient_group_combo_box_(event_system_),
       save_button_(Button(event_system_)),
-      close_button_(Button(event_system_))
+      close_button_(Button(event_system_)),
+      add_button_(Button(event_system_))
 {
     save_button_.SetText("Spremi");
     save_button_.HorizontalAlignment(ButtonHorizontalAlignment::Left, size_);
@@ -32,6 +36,9 @@ CoefficientDatabase::CoefficientDatabase(EventSystem& event_system, Backend::Coe
     close_button_.SetText("Zatvori");
     close_button_.HorizontalAlignment(ButtonHorizontalAlignment::Right, size_);
     close_button_.VerticalAlignment(ButtonVerticalAlignment::Down, size_);
+
+    add_button_.SetText("+");
+    add_button_.SetSize({20.0f, 25.0f});
 
     previously_selected_coefficient_group_ = coefficient_service_.GetCoefficientsDatabase()->begin()->first;
     selected_database_ = &coefficient_service_.GetCoefficientsDatabase()->begin()->second;
@@ -44,9 +51,17 @@ void CoefficientDatabase::Show()
     ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
     ImGui::SetNextWindowSize(size_);
 
-    if (ImGui::Begin("Baza koeficijenata", NULL, flags))
+    if (ImGui::Begin("Baza koeficijenata", NULL, window_flags))
     {
+
         coefficient_group_combo_box_.Show(*coefficient_service_.GetCoefficientsDatabase(), selected_coefficient_group_);
+
+        ImGui::SameLine(0.0f, 10.0f);
+        if (add_button_.Show())
+        {
+            selected_database_->emplace(std::make_pair(new char[100](), 0.0));
+        }
+
         selected_database_ = &(*coefficient_service_.GetCoefficientsDatabase())[selected_coefficient_group_];
 
         // In order to properly delete database entries, change also the database map iterator - otherwise it crashes.
@@ -64,11 +79,11 @@ void CoefficientDatabase::Show()
             row_to_remove_ = selected_database_->end();
         }
 
-        if (ImGui::BeginTable(table_id.c_str(), 3, ImGuiTableFlags_Borders))
+        if (ImGui::BeginTable(table_id.c_str(), 3, table_flags))
         {
-            ImGui::TableSetupColumn("Parametar");
-            ImGui::TableSetupColumn("Vrijednost");
-            ImGui::TableSetupColumn("", ImGuiTableFlags_NoBordersInBody);
+            ImGui::TableSetupColumn("Parametar",ImGuiTableColumnFlags_WidthStretch);
+            ImGui::TableSetupColumn("Vrijednost", ImGuiTableColumnFlags_WidthFixed);
+            ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
             ImGui::TableHeadersRow();
 
             std::size_t component_id{0};
@@ -78,10 +93,15 @@ void CoefficientDatabase::Show()
                 ImGui::TableNextRow();
 
                 ImGui::TableSetColumnIndex(0);
-                ImGui::Text("%s", it->first.c_str());
+                ImGui::PushStyleColor(ImGuiCol_FrameBg, 0);
+                ImGui::SetNextItemWidth(-FLT_MIN);
+                std::string input_text_label_id{fmt::format("##Text{}", component_id)};
+                ImGui::InputText(input_text_label_id.c_str(), it->first, 100);
 
                 ImGui::TableSetColumnIndex(1);
-                ImGui::Text("%.2f", it->second);
+                std::string input_number_label_id{fmt::format("##Label{}", component_id)};
+                ImGui::InputScalar(input_number_label_id.c_str(), ImGuiDataType_Float, &it->second);
+                ImGui::PopStyleColor();
 
                 ImGui::TableSetColumnIndex(2);
                 std::string delete_label_id{fmt::format("X##{}", component_id)};

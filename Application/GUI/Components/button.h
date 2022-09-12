@@ -31,6 +31,7 @@ class Button
     Button(EventSystem& event_system);
 
     void SetText(const std::string& button_text);
+    void SetSize(ImVec2 size);
     void HorizontalAlignment(GUI::ButtonHorizontalAlignment button_horizontal_alignment, ImVec2 parent_window_size);
     void VerticalAlignment(GUI::ButtonVerticalAlignment button_vertical_alignment, ImVec2 parent_window_size);
 

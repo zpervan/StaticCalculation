@@ -10,7 +10,7 @@
 #include "Application/Backend/util.h"
 #include "Application/Core/paths.h"
 
-using Coefficients = std::map<std::string, std::map<std::string, float>>;
+using Coefficients = std::map<std::string, std::map<char *, float>>;
 
 namespace CoefficientParser
 {
@@ -36,7 +36,10 @@ inline Coefficients* Load()
 
         for (auto coefficient = group->begin(); coefficient != group->end(); ++coefficient)
         {
-            (*coefficients)[processed_group_key].emplace(std::make_pair(Util::ProcessString(coefficient.key()), coefficient.value()));
+            char* key{new char[100]};
+            strcpy(key, Util::ProcessString(coefficient.key()).c_str());
+
+            (*coefficients)[processed_group_key].emplace(std::make_pair(key, coefficient.value()));
         }
     }
 

@@ -43,7 +43,7 @@ void GUI::ComboBox::Show(const std::map<std::string, float>& values, std::pair<s
     }
 }
 
-void GUI::ComboBox::Show(const std::map<std::string, std::map<std::string, float>>& values, std::string& selected_value)
+void GUI::ComboBox::Show(const std::map<std::string, std::map<char*, float>>& values, std::string& selected_value)
 {
     ImGui::SetNextItemWidth(200.0f);
 

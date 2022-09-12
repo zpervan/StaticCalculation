@@ -11,6 +11,11 @@ void GUI::Button::SetText(const std::string& button_text)
     button_text_ = button_text;
 }
 
+void GUI::Button::SetSize(ImVec2 size)
+{
+    size_ = size;
+}
+
 void GUI::Button::HorizontalAlignment(ButtonHorizontalAlignment button_horizontal_alignment, ImVec2 parent_window_size)
 {
     assert(parent_window_size.x > 0.0f && parent_window_size.y > 0.0f && "Parent window size must be valid");
@@ -55,8 +60,15 @@ bool GUI::Button::Show()
 {
     assert(!button_text_.empty() && "Button text must be set before usage");
 
-    ImGui::SetCursorPosX(x_position_);
-    ImGui::SetCursorPosY(y_position_);
+    if(x_position_)
+    {
+        ImGui::SetCursorPosX(x_position_);
+    }
+
+    if(y_position_)
+    {
+        ImGui::SetCursorPosY(y_position_);
+    }
 
     return ImGui::Button(id_.c_str(), size_);
 }

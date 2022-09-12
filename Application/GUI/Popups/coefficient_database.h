@@ -18,8 +18,8 @@ class CoefficientDatabase
   private:
     EventSystem& event_system_;
     Backend::CoefficientService& coefficient_service_;
-    std::map<std::string, float>* selected_database_;
-    std::map<std::string, float>::iterator row_to_remove_;
+    std::map<char*, float>* selected_database_;
+    std::map<char*, float>::iterator row_to_remove_;
     std::string selected_coefficient_group_;
     std::string previously_selected_coefficient_group_;
 
@@ -27,6 +27,7 @@ class CoefficientDatabase
     ComboBox coefficient_group_combo_box_;
     Button save_button_;
     Button close_button_;
+    Button add_button_;
     bool is_open_{false};
 };
 
