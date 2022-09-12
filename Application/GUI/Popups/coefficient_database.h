@@ -28,7 +28,6 @@ class CoefficientDatabase
     Button save_button_;
     Button close_button_;
     Button add_button_;
-    bool is_open_{false};
 };
 
 }  // namespace GUI

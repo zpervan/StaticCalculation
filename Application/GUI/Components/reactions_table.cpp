@@ -9,7 +9,8 @@
 
 namespace
 {
-
+ImGuiTableFlags table_flags{ImGuiTableFlags_Borders | ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_RowBg |
+                            ImGuiTableFlags_NoHostExtendX};
 }  // namespace
 
 namespace GUI
@@ -48,14 +49,14 @@ void ReactionsTable::Show()
         row_to_remove_ = reactions_table_parameters_.end();
     }
 
-    if (ImGui::BeginTable("##FertMovingLoadTable", 6, ImGuiTableFlags_Borders))
+    if (ImGui::BeginTable("##FertMovingLoadTable", 6, table_flags))
     {
-        ImGui::TableSetupColumn("POZICIJA");
-        ImGui::TableSetupColumn("SVIJETLI RASPON IZMEDU ZIDOVA Io(m)");
-        ImGui::TableSetupColumn("STATICKI RASPON I(m)");
-        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - STALNO (kn)");
-        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - POKRETNO (kN)");
-        ImGui::TableSetupColumn("-");
+        ImGui::TableSetupColumn("POZICIJA", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("SVIJETLI RASPON IZMEDU ZIDOVA Io(m)", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("STATICKI RASPON I(m)", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - STALNO (kn)", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("REAKCIJA (RA, RB) - POKRETNO (kN)", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn(" ", ImGuiTableColumnFlags_WidthFixed);
         ImGui::TableHeadersRow();
 
         /// @TODO: Move the component ID creation to a separate class
@@ -67,10 +68,12 @@ void ReactionsTable::Show()
 
             ImGui::TableSetColumnIndex(0);
             std::string position_label_id{fmt::format("##Position{}", component_id)};
+            ImGui::SetNextItemWidth(-FLT_MIN);
             ImGui::InputScalar(position_label_id.c_str(), ImGuiDataType_U32, &(it->position));
 
             ImGui::TableSetColumnIndex(1);
             std::string distance_walls_label_id{fmt::format("##DistanceBetweenWalls{}", component_id)};
+            ImGui::SetNextItemWidth(-FLT_MIN);
             ImGui::InputScalar(distance_walls_label_id.c_str(), ImGuiDataType_Float, &(it->distance_between_walls));
 
             ImGui::TableSetColumnIndex(2);

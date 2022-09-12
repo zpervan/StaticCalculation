@@ -53,7 +53,6 @@ void CoefficientDatabase::Show()
 
     if (ImGui::Begin("Baza koeficijenata", NULL, window_flags))
     {
-
         coefficient_group_combo_box_.Show(*coefficient_service_.GetCoefficientsDatabase(), selected_coefficient_group_);
 
         ImGui::SameLine(0.0f, 10.0f);

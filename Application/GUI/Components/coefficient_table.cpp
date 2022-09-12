@@ -8,6 +8,8 @@
 
 namespace
 {
+ImGuiTableFlags table_flags{ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_NoHostExtendX};
+
 std::string load_coefficient_to_remove{};
 }
 
@@ -36,7 +38,7 @@ void CoefficientTable::SetSummaryResultVariable(float& summary_result)
 
 void CoefficientTable::Show()
 {
-    if (ImGui::BeginTable(load_table_label_.c_str(), 3, ImGuiTableFlags_SizingFixedSame))
+    if (ImGui::BeginTable(load_table_label_.c_str(), 3, table_flags))
     {
         if (load_coefficients_->populated_load_coefficients.empty())
         {
