@@ -14,6 +14,7 @@ class CoefficientService
 
     std::map<std::string, float> QueryByKey(const std::string& key);
     Coefficients* GetCoefficientsDatabase();
+    void SaveToJson();
 
   private:
     Coefficients* coefficients_database_;

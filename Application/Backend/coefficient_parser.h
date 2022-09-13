@@ -7,39 +7,70 @@
 #include <json.hpp>
 #include <map>
 
-#include "Application/Backend/util.h"
 #include "Application/Core/paths.h"
 
-using Coefficients = std::map<std::string, std::map<char *, float>>;
+using Coefficients = std::map<std::string, std::map<char*, float>>;
+using json = nlohmann::json;
+
+namespace
+{
+static constexpr auto indent_value{2};
+}
 
 namespace CoefficientParser
 {
 
-inline void Save(const std::map<std::string, float>& coefficients_to_save)
+inline void Save(Coefficients& coefficients_to_save)
 {
-    /// @TODO: Implement saving to JSON functionality
+    spdlog::info("Saving to JSON file: {}", Paths::FertCoefficientFilePath());
+
+    json json_object = json::object();
+
+    // Save coefficient data to JSON object
+    for (auto & group_it : coefficients_to_save)
+    {
+        json_object.emplace(group_it);
+    }
+
+    /// @TODO: Save the JSON file into a different location, otherwise it won't write to the file
+    std::ofstream output_file;
+    output_file.open("/home/zvonimir/Programming/StaticCalculation/Application/Assets/Coefficients/fert_koeficijenti.json", std::ios_base::trunc);
+
+    if(output_file.is_open())
+    {
+        output_file << json_object.dump(indent_value);
+        output_file.close();
+    }
+
+    spdlog::debug(json_object.dump(indent_value));
 }
 
 inline Coefficients* Load()
 {
     spdlog::info("Parsing JSON file: {}", Paths::FertCoefficientFilePath());
-    std::ifstream input_file{Paths::FertCoefficientFilePath()};
+//    std::ifstream input_file{Paths::FertCoefficientFilePath()};
+    std::ifstream input_file{"/home/zvonimir/Programming/StaticCalculation/Application/Assets/Coefficients/fert_koeficijenti.json"};
 
-    nlohmann::json parsed_json;
+    if(!input_file.is_open())
+    {
+        spdlog::warn("Coefficient file doesn't exist");
+        return nullptr;
+    }
+
+    json parsed_json;
     input_file >> parsed_json;
+    input_file.close();
 
     auto* coefficients{new Coefficients};
 
     for (auto group = parsed_json.begin(); group != parsed_json.end(); ++group)
     {
-        std::string processed_group_key{Util::ProcessString(group.key())};
-
         for (auto coefficient = group->begin(); coefficient != group->end(); ++coefficient)
         {
             char* key{new char[100]};
-            strcpy(key, Util::ProcessString(coefficient.key()).c_str());
+            strcpy(key, coefficient.key().c_str());
 
-            (*coefficients)[processed_group_key].emplace(std::make_pair(key, coefficient.value()));
+            (*coefficients)[group.key()].emplace(std::make_pair(key, coefficient.value()));
         }
     }
 

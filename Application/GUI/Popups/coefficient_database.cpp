@@ -117,7 +117,7 @@ void CoefficientDatabase::Show()
 
         if (save_button_.Show())
         {
-            spdlog::debug("Implement saving functionality");
+            coefficient_service_.SaveToJson();
         }
 
         if (close_button_.Show())

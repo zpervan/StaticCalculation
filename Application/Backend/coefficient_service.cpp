@@ -36,4 +36,9 @@ Coefficients* CoefficientService::GetCoefficientsDatabase()
     return coefficients_database_;
 }
 
+void CoefficientService::SaveToJson()
+{
+    CoefficientParser::Save(*coefficients_database_);
+}
+
 }  // namespace Backend

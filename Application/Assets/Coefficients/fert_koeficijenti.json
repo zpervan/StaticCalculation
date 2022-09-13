@@ -1,13 +1,13 @@
 {
-  "stalni_teret": {
-    "gotovi_pod": 0.5,
-    "termoizolacija": 1.32,
-    "pregradni_zidovi": 1.0,
-    "vlastita_tezina_gotove_stropne_konstrukcije": 3.20,
-    "podgled": 0.38
+  "Pokretni teret": {
+    "Ravni krov": 1.0,
+    "Stambene prostorije": 2.0
   },
-  "pokretni_teret": {
-    "stambene_prostorije": 2.0,
-    "ravni_krov": 1.0
+  "Stalni teret": {
+    "Gotovi pod": 0.5,
+    "Podgled": 0.3799999952316284,
+    "Pregradni zidovi": 1.0,
+    "Termoizolacija": 1.3200000524520874,
+    "Vlastita tezina gotove stropne konstrukcije": 3.200000047683716
   }
 }
