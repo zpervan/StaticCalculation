@@ -37,7 +37,10 @@ void MenuBar::Show()
 
             ImGui::Separator();
 
-            ImGui::MenuItem("Ponovno pokreni", nullptr);
+            if(ImGui::MenuItem("Postavke", nullptr))
+            {
+                event_system_.Set(Events::Options_OpenWindow);
+            }
 
             if (ImGui::MenuItem("Izlaz", nullptr))
             {

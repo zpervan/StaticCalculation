@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "Application/Backend/coefficient_service.h"
+#include "Application/Backend/configuration_service.h"
 #include "Application/Core/configuration.h"
 #include "Application/Core/event_system.h"
 #include "Application/Core/paths.h"
@@ -13,6 +14,7 @@
 #include "Application/GUI/Popups/coefficient_database.h"
 #include "Application/GUI/Popups/info_popup_window.h"
 #include "Application/GUI/Popups/new_page_popup.h"
+#include "Application/GUI/Popups/options_popup.h"
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -60,7 +62,6 @@ int main(int, char**)
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-    //    ImGui::StyleColorsLight();
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -69,6 +70,7 @@ int main(int, char**)
 
     // Core functionalities
     EventSystem event_system{};
+    Backend::ConfigurationService configuration_service{};
     Backend::PageService page_service{event_system};
     Backend::CoefficientService coefficient_service{};
     bool is_done{false};
@@ -79,10 +81,13 @@ int main(int, char**)
     GUI::MainWindow main_window{event_system, page_service, coefficient_service};
     GUI::MenuBar menu_bar{event_system};
     GUI::NewPagePopup new_component_popup{event_system, page_service};
+    GUI::OptionsPopup options_popup{event_system, configuration_service};
 
     // Main loop
     while (!glfwWindowShouldClose(window) && !is_done)
     {
+        configuration_service.ApplyOptions();
+
         glfwPollEvents();
 
         /// @TODO: Create a window class and hide the boilerplate code
@@ -114,6 +119,11 @@ int main(int, char**)
             if (event_system.Poll() == Events::NewComponent_OpenWindow)
             {
                 new_component_popup.Show();
+            }
+
+            if (event_system.Poll() == Events::Options_OpenWindow)
+            {
+                options_popup.Show();
             }
         }
 

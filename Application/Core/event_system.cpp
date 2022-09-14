@@ -19,7 +19,8 @@ static std::map<Events, std::string> mapped_map_editor_events{
     {Events::Exit, "Exit"},
     {Events::CreateNewPage, "CreateNewPage"},
     {Events::CoefficientDatabase_OpenWindow, "CoefficientDatabase_OpenWindow"},
-    {Events::About_OpenWindow, "About_OpenWindow"}
+    {Events::About_OpenWindow, "About_OpenWindow"},
+    {Events::Options_OpenWindow, "Options_OpenWindow"},
 };
 }
 

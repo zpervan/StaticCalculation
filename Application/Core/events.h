@@ -15,7 +15,8 @@ enum class Events
     CreateNewPage,
     CoefficientDatabase_OpenWindow,
     About_OpenWindow,
-    NewComponent_OpenWindow
+    NewComponent_OpenWindow,
+    Options_OpenWindow
 };
 
 #endif  // STATICCALCULATION_EVENTS_H
