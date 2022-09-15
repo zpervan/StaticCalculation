@@ -33,8 +33,7 @@ inline void Save(Coefficients& coefficients_to_save)
     }
 
     /// @TODO: Save the JSON file into a different location, otherwise it won't write to the file
-    std::ofstream output_file;
-    output_file.open("/home/zvonimir/Programming/StaticCalculation/Application/Assets/Coefficients/fert_koeficijenti.json", std::ios_base::trunc);
+    std::ofstream output_file{Paths::FertCoefficientFilePath(), std::ios_base::trunc};
 
     if(output_file.is_open())
     {
@@ -48,8 +47,7 @@ inline void Save(Coefficients& coefficients_to_save)
 inline Coefficients* Load()
 {
     spdlog::info("Parsing JSON file: {}", Paths::FertCoefficientFilePath());
-//    std::ifstream input_file{Paths::FertCoefficientFilePath()};
-    std::ifstream input_file{"/home/zvonimir/Programming/StaticCalculation/Application/Assets/Coefficients/fert_koeficijenti.json"};
+    std::ifstream input_file{Paths::FertCoefficientFilePath()};
 
     if(!input_file.is_open())
     {
