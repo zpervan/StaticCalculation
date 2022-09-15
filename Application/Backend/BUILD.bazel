@@ -9,6 +9,7 @@ cc_library(
     hdrs = glob(["*.h"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//Application/Backend/Serialization:data-serialization",
         "//Application/Core:core",
         "@imguilib//:imgui",
         "@jsonlib//:json",

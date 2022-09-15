@@ -1,0 +1,22 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+cc_library(
+    name = "data-serialization",
+    srcs = glob([
+        "*.cpp",
+        "*.h",
+    ]),
+    hdrs = glob(["*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [":data-serialization-proto"],
+)
+
+cc_proto_library(
+    name = "data-serialization-proto",
+    deps = [":data-serialization-proto-messages"],
+)
+
+proto_library(
+    name = "data-serialization-proto-messages",
+    srcs = glob(["Messages/*.proto"]),
+)

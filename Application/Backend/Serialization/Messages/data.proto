@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package DataMessages;
+
+// @TODO: Dummy data. Extend in feature commits.
+message Data
+{
+  string file_name = 1;
+}
