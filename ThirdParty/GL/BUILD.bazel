@@ -13,23 +13,23 @@ cc_library(
 cc_library(
     name = "glfw",
     srcs = select({
-        "@bazel_tools//platforms:windows": glob([
+        "@platforms//os:windows": glob([
             "glfw-3.3.5/lib/*.lib",
             "glfw-3.3.5/lib/*.dll",
         ]),
-        "@bazel_tools//platforms:linux": [
+        "@platforms//os:linux": [
             "glfw-3.3.5/lib/libglfw3.a",
         ],
     }),
     hdrs = glob(["glfw-3.3.5/include/GLFW/*.h"]),
     includes = ["glfw-3.3.5/include/GLFW"],
     linkopts = select({
-        "@bazel_tools//platforms:windows": [
+        "@platforms//os:windows": [
             "-DEFAULTLIB:opengl32.lib",
             "-DEFAULTLIB:gdi32.lib",
             "-DEFAULTLIB:shell32.lib",
         ],
-        "@bazel_tools//platforms:linux": [
+        "@platforms//os:linux": [
             "-lX11",
             "-lGL",
             "-lpthread",
